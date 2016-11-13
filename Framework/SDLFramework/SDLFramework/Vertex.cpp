@@ -53,3 +53,19 @@ void Vertex::setPrevious(Vertex* v)
 {
 	this->previous = v;
 }
+
+int Vertex::getFScore() const
+{
+	return this->f;
+}
+
+void Vertex::setFScore(int f)
+{
+	this->f = f;
+}
+
+int Vertex::getHeuristic(Vertex *goal) const
+{
+	return abs(getX() - goal->getX()) + abs(getY() - goal->getY());
+}
+

@@ -2,6 +2,8 @@
 #include <SDL_render.h>
 #include <ctime>
 #include <queue>
+#include "Map.h"
+#include <map>
 
 GameObject::GameObject()
 {
@@ -21,11 +23,14 @@ void GameObject::Update(float deltaTime) {
 void GameObject::chase(GameObject *object)
 {
 
-	priority_queue<Vertex*> toVisit;
+	priority_queue<Vertex*, vector<Vertex*>, Heuristic> toVisit;
 	location->setCost(0);
+	auto f = location->getHeuristic(object->getLocation());
+	location->setFScore(f);
+	
 	toVisit.push(location);
 
-	bool foundRabbit = false;
+	auto foundRabbit = false;
 
 	while(!toVisit.empty())
 	{
@@ -57,6 +62,8 @@ void GameObject::chase(GameObject *object)
 			if(next->getCost() > (loc->getCost() + static_cast<int>(edge->getWeight())))
 			{
 				next->setCost(loc->getCost() + edge->getWeight());
+				f = next->getHeuristic(object->getLocation());
+				next->setFScore(f);
 				next->setPrevious(loc);
 				toVisit.push(next);
 			}

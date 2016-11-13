@@ -1,6 +1,7 @@
 #pragma once
 #include "Map.h"
 #include <ctime>
+#include <cmath>
 
 Map::Map()
 {

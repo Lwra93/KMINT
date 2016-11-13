@@ -7,6 +7,7 @@
 class Map
 {
 public:
+
 	Map();
 	~Map();
 	void addVertex(Vertex* v);
@@ -19,4 +20,14 @@ public:
 private:
 	vector<Vertex*> vertexes;
 	vector<Edge*> edges;
+};
+
+struct Heuristic
+{
+
+	bool operator()(const Vertex *v1, const Vertex *v2) const
+	{
+		return v1->getFScore() > v2->getFScore();
+	}
+	
 };
