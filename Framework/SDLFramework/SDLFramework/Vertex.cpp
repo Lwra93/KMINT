@@ -42,6 +42,7 @@ void Vertex::resetCost()
 {
 	setCost(2147483647);
 	setPrevious(nullptr);
+	setFScore(0);
 }
 
 Vertex* Vertex::getPrevious() const
