@@ -16,6 +16,8 @@ public:
 	void load();
 	Vertex* randomVertex(Vertex* current) const;
 	void resetCosts();
+	vector<Vertex*> getVertexes();
+	void addConnectionsVertexes();
 
 private:
 	vector<Vertex*> vertexes;

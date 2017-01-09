@@ -3,6 +3,7 @@
 #include "IGameObject.h"
 #include "IState.h"
 #include "Vertex.h"
+#include "Map.h"
 
 class IState;
 
@@ -16,7 +17,7 @@ public:
 	Vertex* getLocation() const;
 	bool collides(GameObject *object) const;
 	void setState(IState* state);
-	void action(GameObject*, GameObject*) const;
+	void action(GameObject*, GameObject*, Map*) const;
 
 protected:
 	IState* state;

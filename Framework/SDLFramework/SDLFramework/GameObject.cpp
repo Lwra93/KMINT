@@ -49,7 +49,7 @@ void GameObject::setState(IState* state)
 	this->state = state;
 }
 
-void GameObject::action(GameObject* obj1, GameObject* obj2) const
+void GameObject::action(GameObject* obj1, GameObject* obj2, Map *graph) const
 {
-	this->state->handle(obj1, obj2);
+	this->state->handle(obj1, graph, obj2);
 }

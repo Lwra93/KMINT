@@ -33,6 +33,14 @@ int Vertex::getCost() const
 	return this->cost;
 }
 
+
+int Vertex::GetDistance(Vertex* node) {
+
+	float diffX = x - node->getX();
+	float diffY = y - node->getY();
+	return sqrt((diffY * diffY) + (diffX * diffX));
+}
+
 void Vertex::setCost(int cost)
 {
 	this->cost = cost;

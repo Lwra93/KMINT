@@ -30,7 +30,7 @@ void Map::addEdge(Edge* e)
 void Map::draw(FWApplication &application)
 {
 
-	application.SetColor(Color(0, 0, 0, 255));
+	application.SetColor(Color(246, 246, 246, 255));
 	for(auto edge : this->edges)
 	{
 		int x1 = edge->getVertexes()[0]->getX();
@@ -40,7 +40,7 @@ void Map::draw(FWApplication &application)
 		application.DrawLine(x1, y1, x2, y2);
 	}
 
-	application.SetColor(Color(0, 0, 255, 255));
+	application.SetColor(Color(235, 235, 235, 255));
 	for (auto vertex : this->vertexes)
 		application.DrawCircle(vertex->getX(), vertex->getY(), 10, true);
 
@@ -507,6 +507,8 @@ void Map::load()
 	addEdge(new Edge(vertex432, vertex159, EdgeWeight::NORMAL));
 	addEdge(new Edge(vertex432, vertex165, EdgeWeight::WATER));
 	addEdge(new Edge(vertex351, vertex371, EdgeWeight::NORMAL));
+
+	addConnectionsVertexes();
 }
 
 Vertex* Map::randomVertex(Vertex* current) const
@@ -531,4 +533,34 @@ void Map::resetCosts()
 {
 	for (auto vertex : vertexes)
 		vertex->resetCost();
+}
+
+vector<Vertex*> Map::getVertexes()
+{
+	return vertexes;
+}
+
+void Map::addConnectionsVertexes()
+{
+	for(auto v : vertexes)
+	{
+		auto tempEdges = v->getEdges();
+		for(auto e : v->getEdges())
+		{
+			auto tempNeighbours = e->getVertexes();
+
+			for (auto temp : e->getVertexes())
+			{
+				
+				if (temp->getX() != v->getX() || temp->getY() != v->getY())
+				{
+					v->connections.push_back(temp);
+				}
+			}
+		}
+		
+	}
+
+
+	
 }

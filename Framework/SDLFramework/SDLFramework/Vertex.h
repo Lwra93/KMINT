@@ -21,7 +21,9 @@ public:
 	void setPrevious(Vertex* v);
 	double getPriority() const;
 	void setPriority(double d);
-	
+	int GetDistance(Vertex* node);
+	vector<Vertex*> getConnections() { return connections; };
+	vector<Vertex*> connections;
 
 private:
 	int x, y;
@@ -29,4 +31,5 @@ private:
 	double priority;
 	vector<Edge*> edges;
 	Vertex* previous;
+	
 };

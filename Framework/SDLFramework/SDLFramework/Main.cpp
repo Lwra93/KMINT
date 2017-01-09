@@ -5,12 +5,11 @@
 #include "SDL_timer.h"
 #include <time.h>
 
-#include "Cow.h"
-#include "Rabbit.h"
 #include "Map.h"
 #include "Edge.h"
-#include "Pill.h"
 #include "ChaseState.h"
+#include "Beekeeper.h"
+#include "bee.h"
 
 
 int main(int args[])
@@ -30,21 +29,23 @@ int main(int args[])
 	}
 	
 	application->SetTargetFPS(60);
-	application->SetColor(Color(255, 10, 40, 255));
+	application->SetColor(Color(255, 255, 255, 255));
 
-	auto cow = new Cow();
-	cow->setLocation(graph->randomVertex(cow->getLocation()));
+
+	
+	
+
+	auto beekeeper = new Beekeeper();
+	beekeeper->setLocation(graph->randomVertex(beekeeper->getLocation()));
+
 	ChaseState* state = new ChaseState();
-	cow->setState(state);
-	auto rabbit = new Rabbit();
-	rabbit->setLocation(graph->randomVertex(rabbit->getLocation()));
+	beekeeper->setState(state);
 
-	auto pill = new Pill();
-	pill->setLocation(graph->randomVertex(pill->getLocation()));
+	auto bee = new Bee();
+	bee->setLocation(graph->randomVertex(bee->getLocation()));
 
-	application->AddRenderable(cow);
-	application->AddRenderable(rabbit);
-	application->AddRenderable(pill);
+	application->AddRenderable(beekeeper);
+	application->AddRenderable(bee);
 
 	//while (true){}
 	while (application->IsRunning())
@@ -62,7 +63,7 @@ int main(int args[])
 			case SDL_KEYDOWN:
 				switch (event.key.keysym.sym){
 				case SDLK_UP:
-					cow->action(cow, rabbit);
+					beekeeper->action(beekeeper, bee, graph);
 					graph->resetCosts();
 					break;
 				default:
@@ -71,12 +72,8 @@ int main(int args[])
 			}
 		}
 
-		if (cow->collides(rabbit))
-			rabbit->setLocation(graph->randomVertex(rabbit->getLocation()));
-
-		// Text drawing
-		application->SetColor(Color(0, 0, 0, 255));
-		application->DrawText("Welcome to KMint", 70, 30);
+		if (beekeeper->collides(bee))
+			bee->setLocation(graph->randomVertex(bee->getLocation()));
 		
 		// Graph drawing
 		graph->draw(*application);
@@ -90,9 +87,8 @@ int main(int args[])
 	}
 
 	delete(state);
-	delete(cow);
-	delete(rabbit);
-	delete(pill);
+	delete(beekeeper);
+	delete(bee);
 	delete(graph);
 	delete(application);
 		
