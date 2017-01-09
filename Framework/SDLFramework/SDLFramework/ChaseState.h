@@ -10,7 +10,7 @@ public:
 	void handle(GameObject *object1, Map *graph, GameObject *object2) override;
 	void aStar();
 	int heuristic(Vertex* a, Vertex* b);
-	void aStar(GameObject *object1, GameObject *object2, map<Vertex*, Vertex*>& came_from, map<Vertex*, int>& cost_so_far);
+	void aStar(Vertex *start, Vertex *goal, map<Vertex*, Vertex*>& came_from, map<Vertex*, int>& cost_so_far);
 
 };
 

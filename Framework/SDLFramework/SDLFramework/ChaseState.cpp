@@ -9,81 +9,42 @@ ChaseState::ChaseState()
 {
 }
 
-void ChaseState::handle(GameObject *object1, Map *graph, GameObject *object2)
+void ChaseState::handle(GameObject *beekeeper, Map *graph, GameObject *bee)
 {
+	auto start = beekeeper->getLocation();
+	auto goal = bee->getLocation();
 	std::map<Vertex*, int> mapNodeWeight;
 	std::map<Vertex*, Vertex*> fromTo;
 
 	for (auto p : graph->getVertexes()) {
-		if (p == object1->getLocation())
+		if (p == beekeeper->getLocation())
 			mapNodeWeight[p] = 0;
 		else
 			mapNodeWeight[p] = INT_MAX;
 	}
 
-	aStar(object1, object2, fromTo, mapNodeWeight);
-	
-	/*auto chaser = object1;
-	auto chased = object2;
+	aStar(start, goal, fromTo, mapNodeWeight);
 
-	list<Vertex*> closed;
-	priority_queue<Vertex*, vector<Vertex*>, Heuristic> open;
-	chaser->getLocation()->setCost(0);
-	open.push(chaser->getLocation());
+	Vertex *nextVertex = nullptr;
 
-	while(!open.empty())
+	while(goal != start)
 	{
-		auto current = open.top();
-		open.pop();
-
-		if (current == chased->getLocation())
-			break;
-
-		for(auto edge : current->getEdges())
-		{
-			
-			auto next = edge->getOther(current);
-
-			if(std::find(closed.begin(), closed.end(), next) == closed.end())
-			{
-				
-				if(next->getCost() > (current->getCost() + edge->getWeight()))
-				{
-					
-					auto xExp = (next->getX() - chased->getLocation()->getX());
-					auto yExp = (next->getY() - chased->getLocation()->getY());
-					auto cExp = xExp*xExp + yExp*yExp;
-
-					next->setCost(current->getCost() + edge->getWeight());
-					next->setPriority(sqrt(cExp));
-					next->setPrevious(current);
-					open.push(next);
-
-				}
-			}
-		}
-
-		closed.push_back(current);
-	
+		nextVertex = goal;
+		goal = fromTo.find(goal)->second;
 	}
-
-	auto node = chased->getLocation();
-
-	while (node->getPrevious() != chaser->getLocation())
-		node = node->getPrevious();
-
-	chaser->setLocation(node);*/
-
+	if(nextVertex != nullptr)
+	{
+		beekeeper->setLocation(nextVertex);
+	}
+	
 }
 
 int ChaseState::heuristic(Vertex* a, Vertex* b) {
 	return a->GetDistance(b);
 }
 
-void ChaseState::aStar(GameObject *object1, GameObject *object2, map<Vertex*, Vertex*>& came_from, std::map<Vertex*, int>& cost_so_far)
+void ChaseState::aStar(Vertex *start, Vertex *goal, map<Vertex*, Vertex*>& came_from, std::map<Vertex*, int>& cost_so_far)
 {
-	auto start = object1->getLocation();
-	auto goal = object2->getLocation();
 	PriorityQueue frontier;
 
 	frontier.put(start, 0);
@@ -108,8 +69,4 @@ void ChaseState::aStar(GameObject *object1, GameObject *object2, map<Vertex*, Ve
 			}
 		}
 	}
-	
-	//somehow een aanliggende vertex kiezen met laagste cost
-	if(!frontier.empty())
-		object1->setLocation(frontier.get());
 }
