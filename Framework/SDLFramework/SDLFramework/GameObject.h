@@ -1,7 +1,10 @@
 #pragma once
 
 #include "IGameObject.h"
+#include "IState.h"
 #include "Vertex.h"
+
+class IState;
 
 class GameObject : public IGameObject {
 public:
@@ -12,8 +15,11 @@ public:
 	void setLocation(Vertex* v);
 	Vertex* getLocation() const;
 	bool collides(GameObject *object) const;
+	void setState(IState* state);
+	void action(GameObject*, GameObject*) const;
 
 protected:
+	IState* state;
 	SDL_Texture *texture;
 	Vertex* location;
 };

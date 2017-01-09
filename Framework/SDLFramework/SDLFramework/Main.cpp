@@ -9,6 +9,8 @@
 #include "Rabbit.h"
 #include "Map.h"
 #include "Edge.h"
+#include "Pill.h"
+#include "ChaseState.h"
 
 
 int main(int args[])
@@ -32,12 +34,18 @@ int main(int args[])
 
 	auto cow = new Cow();
 	cow->setLocation(graph->randomVertex(cow->getLocation()));
+	ChaseState* state = new ChaseState();
+	cow->setState(state);
 	auto rabbit = new Rabbit();
 	rabbit->setLocation(graph->randomVertex(rabbit->getLocation()));
 
+	auto pill = new Pill();
+	pill->setLocation(graph->randomVertex(pill->getLocation()));
+
 	application->AddRenderable(cow);
 	application->AddRenderable(rabbit);
-	
+	application->AddRenderable(pill);
+
 	//while (true){}
 	while (application->IsRunning())
 	{
@@ -54,7 +62,7 @@ int main(int args[])
 			case SDL_KEYDOWN:
 				switch (event.key.keysym.sym){
 				case SDLK_UP:
-					cow->chase(rabbit);
+					cow->action(cow, rabbit);
 					graph->resetCosts();
 					break;
 				default:
@@ -68,7 +76,7 @@ int main(int args[])
 
 		// Text drawing
 		application->SetColor(Color(0, 0, 0, 255));
-		application->DrawText("Welcome to KMint", 400, 300);
+		application->DrawText("Welcome to KMint", 70, 30);
 		
 		// Graph drawing
 		graph->draw(*application);
@@ -81,8 +89,10 @@ int main(int args[])
 		application->EndTick();
 	}
 
+	delete(state);
 	delete(cow);
 	delete(rabbit);
+	delete(pill);
 	delete(graph);
 	delete(application);
 		

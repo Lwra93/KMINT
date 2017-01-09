@@ -19,15 +19,14 @@ public:
 	void resetCost();
 	Vertex* getPrevious() const;
 	void setPrevious(Vertex* v);
-	int getFScore() const;
-	void setFScore(int f);
+	double getPriority() const;
+	void setPriority(double d);
 	
-	int getHeuristic(Vertex* g) const;
 
 private:
 	int x, y;
 	int cost;
-	int f;
+	double priority;
 	vector<Edge*> edges;
 	Vertex* previous;
 };

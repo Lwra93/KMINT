@@ -42,7 +42,7 @@ void Vertex::resetCost()
 {
 	setCost(2147483647);
 	setPrevious(nullptr);
-	setFScore(0);
+	setPriority(0);
 }
 
 Vertex* Vertex::getPrevious() const
@@ -55,18 +55,14 @@ void Vertex::setPrevious(Vertex* v)
 	this->previous = v;
 }
 
-int Vertex::getFScore() const
+void Vertex::setPriority(double d)
 {
-	return this->f;
+	this->priority = d;
 }
 
-void Vertex::setFScore(int f)
+double Vertex::getPriority() const
 {
-	this->f = f;
+	return this->priority;
 }
 
-int Vertex::getHeuristic(Vertex *goal) const
-{
-	return abs(getX() - goal->getX()) + abs(getY() - goal->getY());
-}
 
