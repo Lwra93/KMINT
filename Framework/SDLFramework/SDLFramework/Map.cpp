@@ -529,6 +529,11 @@ Vertex* Map::randomVertex(Vertex* current) const
 
 }
 
+Vertex* Map::getVertex(int location) const
+{
+	return vertexes.at(location);
+}
+
 void Map::resetCosts()
 {
 	for (auto vertex : vertexes)

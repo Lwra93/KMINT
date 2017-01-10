@@ -17,6 +17,7 @@ public:
 	Vertex* getLocation() const;
 	bool collides(GameObject *object) const;
 	void setState(IState* state);
+	IState* getState();
 	void action(GameObject*, GameObject*, Map*) const;
 
 protected:

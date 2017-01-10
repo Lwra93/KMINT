@@ -5,6 +5,10 @@
 #include <list>
 #include <map>
 #include "AStar.h"
+#include "Util.h"
+#include "PowerUpState.h"
+#include "BaseState.h"
+#include "PanicState.h"
 
 ChaseState::ChaseState()
 {
@@ -12,29 +16,34 @@ ChaseState::ChaseState()
 
 void ChaseState::handle(GameObject *beekeeper, Map *graph, GameObject *bee)
 {
-	auto start = beekeeper->getLocation();
-	auto goal = bee->getLocation();
-	std::map<Vertex*, int> mapNodeWeight;
-	std::map<Vertex*, Vertex*> fromTo;
+	AStar(beekeeper, graph, bee);
+}
 
-	for (auto p : graph->getVertexes()) {
-		if (p == beekeeper->getLocation())
-			mapNodeWeight[p] = 0;
-		else
-			mapNodeWeight[p] = INT_MAX;
-	}
+void ChaseState::changeState(Beekeeper *beekeeper)
+{
+	if(beekeeper->getBees() <= beekeeper->getMaxBees())
+		return;
 
-	AStar(start, goal, fromTo, mapNodeWeight);
-	
-	Vertex *nextVertex = nullptr;
+	auto randomNr = Util::randomDouble(1, 100);
 
-	while(goal != start)
+	if(randomNr >= 0 && randomNr < beekeeper->getPowerupChance())
 	{
-		nextVertex = goal;
-		goal = fromTo.find(goal)->second;
+		PowerUpState* powerUpState = new PowerUpState();
+		beekeeper->setState(powerUpState);
 	}
-	if(nextVertex != nullptr)
+	else if(randomNr >= beekeeper->getPowerupChance() && randomNr < beekeeper->getPowerupChance()+beekeeper->getBaseChance())
 	{
-		beekeeper->setLocation(nextVertex);
+		BaseState* baseState = new BaseState();
+		beekeeper->setState(baseState);
 	}
+	else if(randomNr >= beekeeper->getBaseChance() && randomNr <= beekeeper->getPowerupChance() + beekeeper->getBaseChance()+beekeeper->getPanicChance())
+	{
+		PanicState* panicState = new PanicState();
+		beekeeper->setState(panicState);
+	}
+}
+
+string ChaseState::getStateName()
+{
+	return "ChaseState";
 }

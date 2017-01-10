@@ -1,14 +1,12 @@
 #pragma once
 #include "IState.h"
-#include <queue>
-#include <map>
-#include "Beekeeper.h"
 
-class ChaseState : public IState
+class BaseState : public IState
 {
 public:
-	ChaseState();
+	BaseState();
 	void handle(GameObject *object1, Map *graph, GameObject *object2) override;
 	void changeState(Beekeeper *beekeeper) override;
 	string getStateName() override;
 };
+

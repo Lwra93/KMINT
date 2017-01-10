@@ -3,11 +3,15 @@
 #include <map>
 #include <functional>
 #include <queue>
+#include "GameObject.h"
+
+class Map;
 
 class AStar
 {
 public:
-	AStar(Vertex *start, Vertex *goal, map<Vertex*, Vertex*>& came_from, map<Vertex*, int>& cost_so_far);
+	AStar(GameObject *beekeeper, Map *graph, GameObject *bee);
+	void Algorithm(Vertex *start, Vertex *goal, map<Vertex*, Vertex*>& came_from, map<Vertex*, int>& cost_so_far);
 	int heuristic(Vertex* a, Vertex* b);
 	~AStar();
 };

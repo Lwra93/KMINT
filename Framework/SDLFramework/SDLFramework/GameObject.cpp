@@ -23,8 +23,6 @@ void GameObject::Update(float deltaTime) {
 void GameObject::chase(GameObject *object)
 {
 
-	
-
 }
 
 void GameObject::setLocation(Vertex* v)
@@ -47,6 +45,11 @@ bool GameObject::collides(GameObject *object) const
 void GameObject::setState(IState* state)
 {
 	this->state = state;
+}
+
+IState* GameObject::getState()
+{
+	return state;
 }
 
 void GameObject::action(GameObject* obj1, GameObject* obj2, Map *graph) const

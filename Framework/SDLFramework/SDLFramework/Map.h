@@ -15,6 +15,7 @@ public:
 	void draw(FWApplication &application);
 	void load();
 	Vertex* randomVertex(Vertex* current) const;
+	Vertex* getVertex(int location) const;
 	void resetCosts();
 	vector<Vertex*> getVertexes();
 	void addConnectionsVertexes();

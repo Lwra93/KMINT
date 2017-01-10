@@ -2,7 +2,36 @@
 
 
 
-AStar::AStar(Vertex *start, Vertex *goal, map<Vertex*, Vertex*>& came_from, map<Vertex*, int>& cost_so_far)
+AStar::AStar(GameObject *beekeeper, Map *graph, GameObject *bee)
+{
+	auto start = beekeeper->getLocation();
+	auto goal = bee->getLocation();
+	std::map<Vertex*, int> mapNodeWeight;
+	std::map<Vertex*, Vertex*> fromTo;
+
+	for (auto p : graph->getVertexes()) {
+		if (p == beekeeper->getLocation())
+			mapNodeWeight[p] = 0;
+		else
+			mapNodeWeight[p] = INT_MAX;
+	}
+
+	Algorithm(start, goal, fromTo, mapNodeWeight);
+
+	Vertex *nextVertex = nullptr;
+
+	while (goal != start)
+	{
+		nextVertex = goal;
+		goal = fromTo.find(goal)->second;
+	}
+	if (nextVertex != nullptr)
+	{
+		beekeeper->setLocation(nextVertex);
+	}
+}
+
+void AStar::Algorithm(Vertex* start, Vertex* goal, map<Vertex*, Vertex*>& came_from, map<Vertex*, int>& cost_so_far)
 {
 	PriorityQueue frontier;
 
