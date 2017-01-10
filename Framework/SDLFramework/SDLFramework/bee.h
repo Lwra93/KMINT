@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 
-class Bee : public GameObject //forcedriven entities NIET OP DE GRAPH.
+class Bee : public GameObject
 {
 public:
 	Bee();

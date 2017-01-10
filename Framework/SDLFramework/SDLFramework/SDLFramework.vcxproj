@@ -87,13 +87,16 @@
     <ClCompile Include="AStar.cpp" />
     <ClCompile Include="Bee.cpp" />
     <ClCompile Include="Beekeeper.cpp" />
+    <ClCompile Include="C2DMatrix.cpp" />
     <ClCompile Include="ChaseState.cpp" />
     <ClCompile Include="Edge.cpp" />
+    <ClCompile Include="ForceDrivenEntity.cpp" />
     <ClCompile Include="FWApplication.cpp" />
     <ClCompile Include="IState.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Vector2D.cpp" />
     <ClCompile Include="Vertex.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -103,14 +106,17 @@
     <ClInclude Include="AStar.h" />
     <ClInclude Include="Bee.h" />
     <ClInclude Include="Beekeeper.h" />
+    <ClInclude Include="C2DMatrix.h" />
     <ClInclude Include="ChaseState.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Edge.h" />
+    <ClInclude Include="ForceDrivenEntity.h" />
     <ClInclude Include="FWApplication.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="IGameObject.h" />
     <ClInclude Include="IState.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="Vector2D.h" />
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -24,7 +24,7 @@ void ChaseState::handle(GameObject *beekeeper, Map *graph, GameObject *bee)
 			mapNodeWeight[p] = INT_MAX;
 	}
 
-	AStar a = AStar(start, goal, fromTo, mapNodeWeight);
+	AStar(start, goal, fromTo, mapNodeWeight);
 	
 	Vertex *nextVertex = nullptr;
 

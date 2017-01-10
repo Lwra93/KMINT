@@ -41,6 +41,15 @@ int main(int args[])
 	ChaseState* state = new ChaseState();
 	beekeeper->setState(state);
 
+	//auto bee = new Bee(application->LoadTexture("bee.png"), application,
+	//	Vector2D(300, 500),                 //initial position
+	//	100,        //start rotation
+	//	Vector2D(40, 40),            //velocity
+	//	1.0,          //mass
+	//	400.0,     //max force
+	//	40.0,             //max velocity
+	//	3.14159, //max turn rate
+	//	1.0);
 	auto bee = new Bee();
 	bee->setLocation(graph->randomVertex(bee->getLocation()));
 
@@ -77,6 +86,12 @@ int main(int args[])
 		
 		// Graph drawing
 		graph->draw(*application);
+
+		//draw net around beekeeper
+		int x = beekeeper->getLocation()->getX();
+		int y = beekeeper->getLocation()->getY();
+		application->SetColor(Color(242, 242, 242, 255));
+		application->DrawCircle(x, y, beekeeper->getNetSize(), true);
 
 		// For the background
 		application->SetColor(Color(255, 255, 255, 255));
