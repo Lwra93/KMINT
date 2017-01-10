@@ -6,14 +6,6 @@
 #include <time.h>
 
 #include "Map.h"
-#include "Edge.h"
-#include "ChaseState.h"
-#include "Beekeeper.h"
-#include "bee.h"
-#include "PowerUpState.h"
-#include "PowerUp.h"
-#include "Base.h"
-#include "BaseState.h"
 #include "Game.h"
 
 

@@ -1,21 +1,20 @@
 #include "Game.h"
 #include "Beekeeper.h"
-#include "BaseState.h"
 #include "bee.h"
-#include "Base.h"
-#include "PowerUp.h"
 #include <SDL.h>
 #include "ChaseState.h"
-#include "PowerUpState.h"
 #include <iostream>
+using namespace kmint;
+
+namespace kmint
+{
+	extern Beekeeper* beekeeper = new Beekeeper();
+	extern Base* base = new Base();
+	extern PowerUp* powerup = new PowerUp();
+}
 
 Game::Game(FWApplication* application, Map *graph)
-{
-	
-
-	
-	
-
+{	
 	//auto bee = new Bee(application->LoadTexture("bee.png"), application,
 	//	Vector2D(300, 500),                 //initial position
 	//	100,        //start rotation
@@ -31,13 +30,8 @@ Game::Game(FWApplication* application, Map *graph)
 	bee->setLocation(graph->randomVertex(bee->getLocation()));
 
 	//vaste objecten
-	this->beekeeper = new Beekeeper();
 	beekeeper->setLocation(graph->randomVertex(beekeeper->getLocation()));
-	
-	auto powerup = new PowerUp();
 	powerup->setLocation(graph->randomVertex(powerup->getLocation()));
-
-	auto base = new Base();
 	base->setLocation(graph->getVertex(0));
 
 	application->AddRenderable(base);
@@ -70,6 +64,10 @@ Game::Game(FWApplication* application, Map *graph)
 						beekeeper->action(beekeeper, bee, graph);
 					else if (beekeeper->getState()->getStateName() == "BaseState")
 						beekeeper->action(beekeeper, base, graph);
+					else if (beekeeper->getState()->getStateName() == "SuperState")
+						beekeeper->action(beekeeper, bee, graph);
+					else if (beekeeper->getState()->getStateName() == "PanicState")
+						beekeeper->action(beekeeper, beekeeper, graph);
 
 					graph->resetCosts();
 					break;
@@ -79,20 +77,24 @@ Game::Game(FWApplication* application, Map *graph)
 			}
 		}
 
-		if (beekeeper->collides(bee))
+		if (beekeeper->collides(bee) && (beekeeper->getState()->getStateName() == "ChaseState" || beekeeper->getState()->getStateName() == "SuperState"))
 		{
-			beekeeper->addBee();
 			bee->setLocation(graph->randomVertex(bee->getLocation()));
-
-			beekeeper->getState()->changeState(beekeeper);
+			beekeeper->getState()->changeState();
 		}
 		else if (beekeeper->collides(powerup) && beekeeper->getState()->getStateName() == "PowerUpState")
 		{
 			powerup->setLocation(graph->randomVertex(powerup->getLocation()));
+			beekeeper->getState()->changeState();
 		}
-		else if (beekeeper->collides(base))
+		else if (beekeeper->collides(base) && beekeeper->getState()->getStateName() == "BaseState")
 		{
-			base->emptyNet(beekeeper->removeBees());
+			beekeeper->getState()->changeState();
+		}
+		else if(beekeeper->getState()->getStateName() == "PanicState")
+		{
+			beekeeper->getState()->changeState();
+			
 		}
 
 

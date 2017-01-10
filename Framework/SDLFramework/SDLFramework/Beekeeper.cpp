@@ -29,6 +29,11 @@ void Beekeeper::addBee()
 	this->beesInNet++;
 }
 
+void Beekeeper::removeBee()
+{
+	this->beesInNet--;
+}
+
 int Beekeeper::getBees()
 {
 	return this->beesInNet;
@@ -44,6 +49,11 @@ int Beekeeper::removeBees()
 int Beekeeper::getMaxBees()
 {
 	return this->maxBees;
+}
+
+void Beekeeper::setMaxBees(int amount)
+{
+	this->maxBees = amount;
 }
 
 double Beekeeper::getPowerupChance()

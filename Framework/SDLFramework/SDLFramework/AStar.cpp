@@ -1,7 +1,5 @@
 #include "AStar.h"
 
-
-
 AStar::AStar(GameObject *beekeeper, Map *graph, GameObject *bee)
 {
 	auto start = beekeeper->getLocation();

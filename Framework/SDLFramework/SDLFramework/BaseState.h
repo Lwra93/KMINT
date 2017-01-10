@@ -6,7 +6,7 @@ class BaseState : public IState
 public:
 	BaseState();
 	void handle(GameObject *object1, Map *graph, GameObject *object2) override;
-	void changeState(Beekeeper *beekeeper) override;
+	void changeState() override;
 	string getStateName() override;
 };
 
