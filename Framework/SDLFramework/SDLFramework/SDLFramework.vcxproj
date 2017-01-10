@@ -84,6 +84,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AStar.cpp" />
     <ClCompile Include="Bee.cpp" />
     <ClCompile Include="Beekeeper.cpp" />
     <ClCompile Include="ChaseState.cpp" />
@@ -99,6 +100,7 @@
     <None Include="SDL2.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AStar.h" />
     <ClInclude Include="Bee.h" />
     <ClInclude Include="Beekeeper.h" />
     <ClInclude Include="ChaseState.h" />
