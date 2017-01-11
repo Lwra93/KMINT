@@ -42,18 +42,43 @@ bool GameObject::moveTo(double x, double y, FWApplication* app)
 
 	double deltaX = x - tempX;
 	double deltaY = y - tempY;
+
+	bool moveUp = deltaY >= 0 ? true : false;
+	bool moveRight = deltaX >= 0 ? true : false;
+
 	Vector2D vector = Vector2D(deltaX, deltaY);
 	vector.Normalize();
 
 	while(!goalreached)
 	{
-		this->setLocation(this->location->x + (vector.x * 5), this->location->y + (vector.y * 5));
+		tempX += (vector.x);
+		tempY += (vector.y);
+		this->setLocation(tempX, tempY);
 
-		app->UpdateGameObjects();
-		app->RenderGameObjects();
+		this->Draw();
+		
 		//werkt half, crasht nog wel is en is niet heel strak
-		if (tempX >= x && tempY >= y)
-			return true;
+		if (moveUp && moveRight)
+		{
+			if (tempX >= x && tempY >= y)
+				return true;
+		}
+		else if(!moveUp && !moveRight)
+		{
+			if (tempX <= x && tempY <= y)
+				return true;
+		}
+		else if (moveUp && !moveRight)
+		{
+			if (tempX <= x && tempY >= y)
+				return true;
+		}
+		else if (!moveUp && moveRight)
+		{
+			if (tempX >= x && tempY <= y)
+				return true;
+		}
+
 			//goalreached = true;
 	}
 	
