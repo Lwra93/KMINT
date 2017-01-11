@@ -4,17 +4,14 @@
 #include <SDL.h>
 #include "ChaseState.h"
 #include <iostream>
-using namespace kmint;
-
-namespace kmint
-{
-	extern Beekeeper* beekeeper = new Beekeeper();
-	extern Base* base = new Base();
-	extern PowerUp* powerup = new PowerUp();
-}
+#include <string>
 
 Game::Game(FWApplication* application, Map *graph)
 {	
+	beekeeper = new Beekeeper();
+	base = new Base();
+	powerup = new PowerUp();
+
 	//auto bee = new Bee(application->LoadTexture("bee.png"), application,
 	//	Vector2D(300, 500),                 //initial position
 	//	100,        //start rotation
@@ -80,26 +77,33 @@ Game::Game(FWApplication* application, Map *graph)
 		if (beekeeper->collides(bee) && (beekeeper->getState()->getStateName() == "ChaseState" || beekeeper->getState()->getStateName() == "SuperState"))
 		{
 			bee->setLocation(graph->randomVertex(bee->getLocation()));
-			beekeeper->getState()->changeState();
+			beekeeper->getState()->changeState(beekeeper, base, powerup);
 		}
 		else if (beekeeper->collides(powerup) && beekeeper->getState()->getStateName() == "PowerUpState")
 		{
 			powerup->setLocation(graph->randomVertex(powerup->getLocation()));
-			beekeeper->getState()->changeState();
+			beekeeper->getState()->changeState(beekeeper, base, powerup);
 		}
 		else if (beekeeper->collides(base) && beekeeper->getState()->getStateName() == "BaseState")
 		{
-			beekeeper->getState()->changeState();
+			beekeeper->getState()->changeState(beekeeper, base, powerup);
 		}
 		else if(beekeeper->getState()->getStateName() == "PanicState")
 		{
-			beekeeper->getState()->changeState();
+			beekeeper->getState()->changeState(beekeeper, base, powerup);
 			
 		}
 
 
 		// Graph drawing
 		graph->draw(*application);
+
+		// stats
+		application->SetColor(Color(0, 0, 0, 255));
+		application->DrawText("Bijen in mijn net: " + to_string(beekeeper->getBees()), 510, 520);
+		application->DrawText("Net grootte: " + to_string(beekeeper->getMaxBees()), 510, 540);
+		application->DrawText("Huidige state: " + beekeeper->getState()->getStateName(), 510, 560);
+		application->DrawText("Bijen in de hive: " + to_string(base->getBees()), 510, 580);
 
 		//draw net around beekeeper
 		int x = beekeeper->getLocation()->getX();

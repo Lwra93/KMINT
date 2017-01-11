@@ -42,7 +42,7 @@ void Map::draw(FWApplication &application)
 
 	application.SetColor(Color(235, 235, 235, 255));
 	for (auto vertex : this->vertexes)
-		application.DrawCircle(vertex->getX(), vertex->getY(), 10, true);
+		application.DrawCircle(vertex->getX(), vertex->getY(), 5, true);
 
 
 }
