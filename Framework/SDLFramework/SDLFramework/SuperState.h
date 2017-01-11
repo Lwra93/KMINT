@@ -5,8 +5,8 @@ class SuperState : public IState
 {
 public:
 	SuperState();
-	void handle(GameObject *object1, Map *graph, GameObject *object2) override;
-	void changeState() override;
+	void handle(Beekeeper *beekeeper, Map *graph, GameObject *object2) override;
+	void changeState(Beekeeper* beekeeper, Base* base, PowerUp* powerup) override;
 	string getStateName() override;
 };
 

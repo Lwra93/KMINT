@@ -52,7 +52,7 @@ IState* GameObject::getState()
 	return state;
 }
 
-void GameObject::action(GameObject* obj1, GameObject* obj2, Map *graph) const
+void GameObject::action(Beekeeper* obj1, GameObject* obj2, Map *graph) const
 {
 	this->state->handle(obj1, graph, obj2);
 }

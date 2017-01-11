@@ -2,13 +2,12 @@
 #include "Game.h"
 #include "BaseState.h"
 #include "Util.h"
-using namespace kmint;
 
 PanicState::PanicState()
 {
 }
 
-void PanicState::handle(GameObject *object1, Map *graph, GameObject *object2)
+void PanicState::handle(Beekeeper *beekeeper, Map *graph, GameObject *object2)
 {
 	auto loc = beekeeper->getLocation();
 	auto connections = loc->getConnections();
@@ -24,7 +23,7 @@ void PanicState::handle(GameObject *object1, Map *graph, GameObject *object2)
 	}
 }
 
-void PanicState::changeState()
+void PanicState::changeState(Beekeeper* beekeeper, Base* base, PowerUp* powerup)
 {
 	if (beekeeper->getBees() == 0)
 	{

@@ -3,18 +3,17 @@
 #include "SuperState.h"
 #include "Beekeeper.h"
 #include "Game.h"
-using namespace kmint;
 
 PowerUpState::PowerUpState()
 {
 }
 
-void PowerUpState::handle(GameObject* beekeeper, Map* graph, GameObject* powerup)
+void PowerUpState::handle(Beekeeper *beekeeper, Map* graph, GameObject* powerup)
 {
 	AStar(beekeeper, graph, powerup);
 }
 
-void PowerUpState::changeState()
+void PowerUpState::changeState(Beekeeper* beekeeper, Base* base, PowerUp* powerup)
 {
 	base->emptyNet(beekeeper->removeBees());
 	SuperState* super = new SuperState();

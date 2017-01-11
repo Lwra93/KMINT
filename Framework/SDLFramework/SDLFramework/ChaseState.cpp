@@ -10,19 +10,17 @@
 #include "PowerUpState.h"
 #include "BaseState.h"
 #include "PanicState.h"
-using namespace kmint;
 
 ChaseState::ChaseState()
 {
 }
 
-void ChaseState::handle(GameObject *keeper, Map *graph, GameObject *bee)
+void ChaseState::handle(Beekeeper *beekeeper, Map *graph, GameObject *bee)
 {
-	beekeeper->setMaxBees(10);
-	AStar(keeper, graph, bee);
+	AStar(beekeeper, graph, bee);
 }
 
-void ChaseState::changeState()
+void ChaseState::changeState(Beekeeper* beekeeper, Base* base, PowerUp* powerup)
 {
 	beekeeper->addBee();
 
@@ -31,7 +29,7 @@ void ChaseState::changeState()
 
 	auto randomNr = Util::randomDouble(1, 100);
 
-	/*if(randomNr >= 0 && randomNr < beekeeper->getPowerupChance())
+	if(randomNr >= 0 && randomNr < beekeeper->getPowerupChance())
 	{
 		PowerUpState* powerUpState = new PowerUpState();
 		beekeeper->setState(powerUpState);
@@ -42,10 +40,10 @@ void ChaseState::changeState()
 		beekeeper->setState(baseState);
 	}
 	else if(randomNr >= beekeeper->getBaseChance() && randomNr <= beekeeper->getPowerupChance() + beekeeper->getBaseChance()+beekeeper->getPanicChance())
-	{*/
+	{
 		PanicState* panicState = new PanicState();
 		beekeeper->setState(panicState);
-	//}
+	}
 }
 
 string ChaseState::getStateName()

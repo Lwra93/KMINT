@@ -3,22 +3,22 @@
 #include "Beekeeper.h"
 #include "ChaseState.h"
 #include "Game.h"
-using namespace kmint;
 
 BaseState::BaseState()
 {
 }
 
-void BaseState::handle(GameObject* beekeeper, Map* graph, GameObject* base)
+void BaseState::handle(Beekeeper *beekeeper, Map* graph, GameObject* base)
 {
 	AStar(beekeeper, graph, base);
 }
 
-void BaseState::changeState()
+void BaseState::changeState(Beekeeper* beekeeper, Base* base, PowerUp* powerup)
 {
 	base->emptyNet(beekeeper->removeBees());
 	ChaseState* chase = new ChaseState();
 	beekeeper->setState(chase);
+	beekeeper->setMaxBees(10);
 }
 
 string BaseState::getStateName()

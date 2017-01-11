@@ -2,18 +2,17 @@
 #include "Game.h"
 #include "AStar.h"
 #include "BaseState.h"
-using namespace kmint;
 
 SuperState::SuperState()
 {
 }
 
-void SuperState::handle(GameObject * keeper, Map * graph, GameObject * bee)
+void SuperState::handle(Beekeeper *beekeeper, Map * graph, GameObject * bee)
 {
-	AStar(keeper, graph, bee);
+	AStar(beekeeper, graph, bee);
 }
 
-void SuperState::changeState()
+void SuperState::changeState(Beekeeper* beekeeper, Base* base, PowerUp* powerup)
 {
 	beekeeper->addBee();
 

@@ -12,6 +12,11 @@ void Base::emptyNet(int bees)
 	this->bees += bees;
 }
 
+int Base::getBees()
+{
+	return this->bees;
+}
+
 Base::~Base()
 {
 }

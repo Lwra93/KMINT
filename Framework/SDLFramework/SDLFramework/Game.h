@@ -7,19 +7,14 @@
 
 class Map;
 
-namespace kmint
-{
-	extern Beekeeper* beekeeper;
-	extern Base* base;
-	extern PowerUp* powerup;
-}
-
-
 class Game
 {
 public:
 	Game(FWApplication* app, Map *graph);
 	~Game();
-
+private:
+	Beekeeper* beekeeper;
+	Base* base;
+	PowerUp* powerup;
 };
 
