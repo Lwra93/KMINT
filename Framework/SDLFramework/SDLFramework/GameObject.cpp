@@ -17,7 +17,8 @@ GameObject::~GameObject() {
 }
 
 void GameObject::Update(float deltaTime) {
-	SetOffset(location->getX(), location->getY());
+	if(this->location != nullptr)
+		SetOffset(location->getX(), location->getY());
 }
 
 void GameObject::chase(GameObject *object)

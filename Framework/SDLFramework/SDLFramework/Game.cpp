@@ -24,8 +24,18 @@ Game::Game(FWApplication* application, Map *graph)
 	//	1.0);
 	
 	//autospawnen TODO
-	auto bee = new Bee();
-	bee->setLocation(graph->randomVertex(bee->getLocation()));
+	Vector2D SpawnPos = Vector2D(600, 400);
+	std::string color = "";
+	auto bee = new Bee(application->LoadTexture("bee.png"), application,
+		SpawnPos,                 //initial position
+		100,        //start rotation
+		Vector2D(160, 160),            //velocity
+		1.0,          //mass
+		400.0,     //max force
+		160.0,             //max velocity
+		3.14159, //max turn rate
+		1.0, color);
+	//bee->setLocation(graph->randomVertex(bee->getLocation()));
 
 	//vaste objecten
 	beekeeper->setLocation(graph->randomVertex(beekeeper->getLocation()));
@@ -34,7 +44,7 @@ Game::Game(FWApplication* application, Map *graph)
 
 	application->AddRenderable(base);
 	application->AddRenderable(beekeeper);
-	application->AddRenderable(bee);
+	//application->AddRenderable(bee);
 	application->AddRenderable(powerup);
 
 	clock_t this_time = clock();
@@ -114,11 +124,11 @@ Game::Game(FWApplication* application, Map *graph)
 
 		// stats
 		application->SetColor(Color(0, 0, 0, 255));
-		application->DrawText("Bijen in mijn net: " + to_string(beekeeper->getBees()), 510, 520);
+		/*application->DrawText("Bijen in mijn net: " + to_string(beekeeper->getBees()), 510, 520);
 		application->DrawText("Net grootte: " + to_string(beekeeper->getMaxBees()), 510, 540);
 		application->DrawText("Huidige state: " + beekeeper->getState()->getStateName(), 510, 560);
 		application->DrawText("Bijen in de hive: " + to_string(base->getBees()), 510, 580);
-
+*/
 		//draw net around beekeeper
 		int x = beekeeper->getLocation()->getX();
 		int y = beekeeper->getLocation()->getY();
