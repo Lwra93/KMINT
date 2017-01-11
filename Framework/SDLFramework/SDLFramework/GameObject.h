@@ -4,6 +4,7 @@
 #include "IState.h"
 #include "Vertex.h"
 #include "Map.h"
+#include "Vector2D.h"
 
 class Beekeeper;
 class IState;
@@ -14,8 +15,13 @@ public:
 	~GameObject();
 	void Update(float deltaTime);
 	void chase(GameObject *object);
-	void setLocation(Vertex* v);
-	Vertex* getLocation() const;
+	void setLocation(double x, double y);
+	bool moveTo(double x, double y, FWApplication* app);
+	Vector2D* getLocation() const;
+	void setCurrentVertex(Vertex* vertex);
+	Vertex* getCurrentVertex();
+	void setGoalVertex(Vertex* vertex);
+	Vertex* getGoalVertex();
 	bool collides(GameObject *object) const;
 	void setState(IState* state);
 	IState* getState();
@@ -24,5 +30,9 @@ public:
 protected:
 	IState* state;
 	SDL_Texture *texture;
-	Vertex* location;
+	Vector2D* location;
+	Vector2D goalLocation;
+
+	Vertex* curVertex;
+	Vertex* goalVertex;
 };

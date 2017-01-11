@@ -2,13 +2,14 @@
 
 AStar::AStar(GameObject *beekeeper, Map *graph, GameObject *bee)
 {
-	auto start = beekeeper->getLocation();
-	auto goal = bee->getLocation();
+	
+	auto start = beekeeper->getCurrentVertex();
+	auto goal = graph->randomVertex(beekeeper->getCurrentVertex());
 	std::map<Vertex*, int> mapNodeWeight;
 	std::map<Vertex*, Vertex*> fromTo;
 
 	for (auto p : graph->getVertexes()) {
-		if (p == beekeeper->getLocation())
+		if (p->getX() == beekeeper->getLocation()->x && p->getY() == beekeeper->getLocation()->y)
 			mapNodeWeight[p] = 0;
 		else
 			mapNodeWeight[p] = INT_MAX;
@@ -25,7 +26,9 @@ AStar::AStar(GameObject *beekeeper, Map *graph, GameObject *bee)
 	}
 	if (nextVertex != nullptr)
 	{
-		beekeeper->setLocation(nextVertex);
+		beekeeper->setGoalVertex(nextVertex);
+		
+		//beekeeper->setCurrentVertex(nextVertex);
 	}
 }
 

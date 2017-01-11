@@ -38,9 +38,9 @@ Game::Game(FWApplication* application, Map *graph)
 	//bee->setLocation(graph->randomVertex(bee->getLocation()));
 
 	//vaste objecten
-	beekeeper->setLocation(graph->randomVertex(beekeeper->getLocation()));
-	powerup->setLocation(graph->randomVertex(powerup->getLocation()));
-	base->setLocation(graph->getVertex(0));
+	beekeeper->setCurrentVertex(graph->randomVertex(beekeeper->getCurrentVertex()));
+	powerup->setCurrentVertex(graph->randomVertex(powerup->getCurrentVertex()));
+	base->setCurrentVertex(graph->getVertex(0));
 
 	application->AddRenderable(base);
 	application->AddRenderable(beekeeper);
@@ -82,7 +82,11 @@ Game::Game(FWApplication* application, Map *graph)
 					if (beekeeper->getState()->getStateName() == "PowerUpState")
 						beekeeper->action(beekeeper, powerup, graph);
 					else if (beekeeper->getState()->getStateName() == "ChaseState")
+					{
 						beekeeper->action(beekeeper, bee, graph);
+						if(beekeeper->moveTo(beekeeper->getGoalVertex()->getX(), beekeeper->getGoalVertex()->getY(), application))
+							beekeeper->setCurrentVertex(beekeeper->getGoalVertex());
+					}
 					else if (beekeeper->getState()->getStateName() == "BaseState")
 						beekeeper->action(beekeeper, base, graph);
 					else if (beekeeper->getState()->getStateName() == "SuperState")
@@ -98,14 +102,14 @@ Game::Game(FWApplication* application, Map *graph)
 			}
 		}
 
-		if (beekeeper->collides(bee) && (beekeeper->getState()->getStateName() == "ChaseState" || beekeeper->getState()->getStateName() == "SuperState"))
+		if (beekeeper->collides(base/*eigenlijk bee!!!*/) && (beekeeper->getState()->getStateName() == "ChaseState" || beekeeper->getState()->getStateName() == "SuperState"))
 		{
-			bee->setLocation(graph->randomVertex(bee->getLocation()));
+			bee->setCurrentVertex(graph->randomVertex(bee->getCurrentVertex()));
 			beekeeper->getState()->changeState(beekeeper, base, powerup);
 		}
 		else if (beekeeper->collides(powerup) && beekeeper->getState()->getStateName() == "PowerUpState")
 		{
-			powerup->setLocation(graph->randomVertex(powerup->getLocation()));
+			powerup->setCurrentVertex(graph->randomVertex(powerup->getCurrentVertex()));
 			beekeeper->getState()->changeState(beekeeper, base, powerup);
 		}
 		else if (beekeeper->collides(base) && beekeeper->getState()->getStateName() == "BaseState")
@@ -130,8 +134,8 @@ Game::Game(FWApplication* application, Map *graph)
 		application->DrawText("Bijen in de hive: " + to_string(base->getBees()), 510, 580);
 */
 		//draw net around beekeeper
-		int x = beekeeper->getLocation()->getX();
-		int y = beekeeper->getLocation()->getY();
+		int x = beekeeper->getLocation()->x;
+		int y = beekeeper->getLocation()->y;
 		application->SetColor(Color(0, 128, 255, 100));
 		application->DrawCircle(x, y, beekeeper->getNetSize(), true);
 
