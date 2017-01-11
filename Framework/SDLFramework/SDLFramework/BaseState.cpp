@@ -19,6 +19,7 @@ void BaseState::changeState(Beekeeper* beekeeper, Base* base, PowerUp* powerup)
 	ChaseState* chase = new ChaseState();
 	beekeeper->setState(chase);
 	beekeeper->setMaxBees(10);
+	beekeeper->changeTexture("beekeeper.png");
 }
 
 string BaseState::getStateName()
