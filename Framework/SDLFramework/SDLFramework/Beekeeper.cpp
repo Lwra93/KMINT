@@ -14,6 +14,13 @@ Beekeeper::Beekeeper() : GameObject::GameObject()
 	this->baseChance = 33.3;
 }
 
+void Beekeeper::changeTexture(string name)
+{
+	this->texture = mApplication->LoadTexture(name);
+	this->SetTexture(texture);
+}
+
+
 void Beekeeper::increaseNetSize()
 {
 	this->netSize += 10;

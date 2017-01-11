@@ -13,6 +13,7 @@ public:
 	int removeBees();
 	int getMaxBees();
 	void setMaxBees(int amount);
+	void changeTexture(string name);
 
 	double getPowerupChance();
 	double getPanicChance();

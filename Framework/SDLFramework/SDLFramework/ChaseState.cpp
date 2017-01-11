@@ -43,6 +43,7 @@ void ChaseState::changeState(Beekeeper* beekeeper, Base* base, PowerUp* powerup)
 	{
 		PanicState* panicState = new PanicState();
 		beekeeper->setState(panicState);
+		beekeeper->changeTexture("beekeeper_panic.png");
 	}
 }
 

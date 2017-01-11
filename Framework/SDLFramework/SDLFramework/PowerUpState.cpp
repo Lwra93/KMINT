@@ -19,6 +19,7 @@ void PowerUpState::changeState(Beekeeper* beekeeper, Base* base, PowerUp* poweru
 	SuperState* super = new SuperState();
 	beekeeper->setState(super);
 	beekeeper->setMaxBees(beekeeper->getMaxBees() * 3);
+	beekeeper->changeTexture("beekeeper_super.png");
 	//snelheid lopen x3
 }
 
