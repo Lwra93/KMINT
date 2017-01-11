@@ -17,8 +17,8 @@ Bee::Bee(SDL_Texture* img, FWApplication* app, Vector2D position,
 	_color = color;
 	this->SetTexture(img);
 	this->mApplication = app;
-	this->mHeight = 50;
-	this->mWidth = 50;
+	this->mHeight = 21;
+	this->mWidth = 25;
 	app->AddRenderable(this);
 }
 
