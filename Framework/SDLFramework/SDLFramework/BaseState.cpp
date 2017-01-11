@@ -16,6 +16,7 @@ void BaseState::handle(Beekeeper *beekeeper, Map* graph, GameObject* base)
 void BaseState::changeState(Beekeeper* beekeeper, Base* base, PowerUp* powerup)
 {
 	base->emptyNet(beekeeper->removeBees());
+	beekeeper->resetNet();
 	ChaseState* chase = new ChaseState();
 	beekeeper->setState(chase);
 	beekeeper->setMaxBees(10);

@@ -23,7 +23,12 @@ void Beekeeper::changeTexture(string name)
 
 void Beekeeper::increaseNetSize()
 {
-	this->netSize += 10;
+	this->netSize += 5;
+}
+
+void Beekeeper::resetNet()
+{
+	this->netSize = 30;
 }
 
 int Beekeeper::getNetSize()

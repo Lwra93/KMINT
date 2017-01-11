@@ -7,6 +7,7 @@ public:
 	Beekeeper();
 	void increaseNetSize();
 	int getNetSize();
+	void resetNet();
 	void addBee();
 	void removeBee();
 	int getBees();

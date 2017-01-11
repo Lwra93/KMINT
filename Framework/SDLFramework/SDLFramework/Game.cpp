@@ -5,6 +5,7 @@
 #include "ChaseState.h"
 #include <iostream>
 #include <string>
+#include <time.h>
 
 Game::Game(FWApplication* application, Map *graph)
 {	
@@ -36,12 +37,25 @@ Game::Game(FWApplication* application, Map *graph)
 	application->AddRenderable(bee);
 	application->AddRenderable(powerup);
 
+	clock_t this_time = clock();
+	clock_t last_time = this_time;
+	double time_counter = 0;
+
 	//startstate
 	ChaseState* chaseState = new ChaseState();
 	beekeeper->setState(chaseState);
 	//while (true){}
 	while (application->IsRunning())
 	{
+		this_time = clock();
+		time_counter += static_cast<double>((this_time - last_time));
+		last_time = this_time;
+
+		if (time_counter > static_cast<double>(1 * CLOCKS_PER_SEC))
+		{
+			time_counter -= static_cast<double>(1 * CLOCKS_PER_SEC);
+			beekeeper->increaseNetSize();
+		}
 		application->StartTick();
 
 		SDL_Event event;
@@ -108,7 +122,7 @@ Game::Game(FWApplication* application, Map *graph)
 		//draw net around beekeeper
 		int x = beekeeper->getLocation()->getX();
 		int y = beekeeper->getLocation()->getY();
-		application->SetColor(Color(242, 242, 242, 255));
+		application->SetColor(Color(0, 128, 255, 100));
 		application->DrawCircle(x, y, beekeeper->getNetSize(), true);
 
 		// For the background
