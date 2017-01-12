@@ -108,7 +108,7 @@ Game::Game(FWApplication* application, Map *graph)
 		application->DrawText("Net grootte: " + to_string(beekeeper->getMaxBees()), 510, 540);
 		application->DrawText("Huidige state: " + beekeeper->getState()->getStateName(), 510, 560);
 		application->DrawText("Bijen in de hive: " + to_string(base->getBees()), 510, 580);
-
+		application->DrawText("Snelheid Game: " + to_string(this->getSpeed()),510,500);
 
 
 
