@@ -72,11 +72,10 @@ Game::Game(FWApplication* application, Map *graph)
 
 		// stats TODO FIXEN
 		application->SetColor(Color(0, 0, 0, 255));
-		//application->DrawText("",0,0);
-		//("Bijen in mijn net: " + to_string(beekeeper->getBees()), 510, 520);
-		//application->DrawText("Net grootte: " + to_string(beekeeper->getMaxBees()), 510, 540);
-		//application->DrawText("Huidige state: " + beekeeper->getState()->getStateName(), 510, 560);
-		//application->DrawText("Bijen in de hive: " + to_string(base->getBees()), 510, 580);
+		application->DrawText("Bijen in mijn net: " + to_string(beekeeper->getBees()), 510, 520);
+		application->DrawText("Net grootte: " + to_string(beekeeper->getMaxBees()), 510, 540);
+		application->DrawText("Huidige state: " + beekeeper->getState()->getStateName(), 510, 560);
+		application->DrawText("Bijen in de hive: " + to_string(base->getBees()), 510, 580);
 
 		//draw net around beekeeper
 		int x = beekeeper->getLocation()->x;
