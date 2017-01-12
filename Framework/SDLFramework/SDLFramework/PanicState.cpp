@@ -32,6 +32,7 @@ void PanicState::changeState()
 {
 	if (beekeeper->getBees() == 0)
 	{
+		beekeeper->setSpecialState(getStateName());
 		beekeeper->setState(StateFactory::getInstance()->getNextBeekeeperState(beekeeper, "BaseState"));
 	}
 }

@@ -19,7 +19,7 @@ public:
 	~Game();
 	Map* getGraph() const;
 	Base* getBase() const;
-	Bee* getBee() const;
+
 	Beekeeper* getBeekeeper() const;
 	vector<Bee*> getBees() const;
 	void createBees();
@@ -29,7 +29,10 @@ public:
 
 	CellSpacePartition<Bee*>* CellSpace() { return m_pCellSpace; }
 
+	void StartTime() { beekeeper->STime(app->mTimeMS); }
+
 private:
+	FWApplication* app;
 	Beekeeper* beekeeper;
 	vector<Bee*> bees;
 	Base* base;

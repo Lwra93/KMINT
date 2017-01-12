@@ -1,10 +1,9 @@
 #include "AStar.h"
 
-AStar::AStar(GameObject *beekeeper, Map *graph, GameObject *bee)
+AStar::AStar(GameObject *beekeeper, Map *graph, Vertex* goal)
 {
 	
 	auto start = beekeeper->getCurrentVertex();
-	auto goal = bee->getCurrentVertex();
 	std::map<Vertex*, int> mapNodeWeight;
 	std::map<Vertex*, Vertex*> fromTo;
 
@@ -17,7 +16,7 @@ AStar::AStar(GameObject *beekeeper, Map *graph, GameObject *bee)
 
 	Algorithm(start, goal, fromTo, mapNodeWeight);
 
-	Vertex *nextVertex = nullptr;
+	Vertex *nextVertex = start;
 
 	while (goal != start)
 	{

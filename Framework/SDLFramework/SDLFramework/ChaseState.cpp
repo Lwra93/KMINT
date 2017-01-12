@@ -20,7 +20,34 @@ ChaseState::ChaseState()
 
 void ChaseState::handle()
 {
-	AStar(beekeeper, beekeeper->getGame()->getGraph(), beekeeper->getGame()->getBee());
+
+	int distance = INT_MAX;
+	Vector2D location;
+
+	for (auto bee : beekeeper->getGame()->getBees())
+	{
+		if (beekeeper->getLocation().Distance(bee->GetPos()) < distance)
+		{
+			distance = beekeeper->getLocation().Distance(bee->GetPos());
+			location = bee->GetPos();
+		}
+	}
+
+	int num = INT_MAX;
+	Vertex* loc = nullptr;
+
+	for(auto vertex : beekeeper->getGame()->getGraph()->getVertexes())
+	{
+		auto x = location.x - vertex->getX();
+		auto y = location.y - vertex->getY();
+		if(abs(x) + abs(y) < num)
+		{
+			num = abs(x) + abs(y);
+			loc = vertex;
+		}
+	}
+
+	AStar(beekeeper, beekeeper->getGame()->getGraph(), loc);
 	beekeeper->setState(StateFactory::getInstance()->getNextBeekeeperState(beekeeper, "MoveState"));
 }
 
@@ -55,9 +82,10 @@ string ChaseState::getStateName()
 
 void ChaseState::update()
 {
-	if(beekeeper->collides(beekeeper->getGame()->getBee()/*eigenlijk bee!!!*/))
+
+	if(beekeeper->getBees() >= 10)
 	{
-		beekeeper->getGame()->getBee()->setCurrentVertex(beekeeper->getGame()->getGraph()->randomVertex(beekeeper->getCurrentVertex()));
+		beekeeper->setSpecialState(getStateName());
 		beekeeper->getState()->changeState();
 	}
 

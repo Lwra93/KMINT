@@ -11,7 +11,7 @@ PowerUpState::PowerUpState()
 
 void PowerUpState::handle()
 {
-	AStar(beekeeper, beekeeper->getGame()->getGraph(), beekeeper->getGame()->getPowerUp());
+	AStar(beekeeper, beekeeper->getGame()->getGraph(), beekeeper->getGame()->getPowerUp()->getCurrentVertex());
 	beekeeper->setState(StateFactory::getInstance()->getNextBeekeeperState(beekeeper, "MoveState"));
 }
 

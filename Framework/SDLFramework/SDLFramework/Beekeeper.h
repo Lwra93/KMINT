@@ -26,6 +26,18 @@ public:
 	double getPanicChance();
 	double getBaseChance();
 
+	void setPowerupChance(double chance) { powerupChance = chance; }
+	void setPanicChance(double chance) { panicChance = chance; }
+	void setBaseChance(double chance) { baseChance = chance; }
+
+	double StartTime() { return startTime; }
+	double EndTime() { return endTime; }
+	void Time(float delta) { endTime = delta; }
+	void STime(float delta) { startTime = delta; }
+
+	string GetSpecialState() { return specialState; }
+	void setSpecialState(string state) { specialState = state; }
+
 	~Beekeeper();
 private:
 	int netSize;
@@ -33,10 +45,13 @@ private:
 	int maxBees;
 
 	string prevState;
+	string specialState;
 
 	//chances for state changing
 	double powerupChance;
 	double panicChance;
 	double baseChance;
+
+	double startTime, endTime;
 };
 

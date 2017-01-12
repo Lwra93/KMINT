@@ -17,11 +17,15 @@ public:
 	const int DetectionRadius() { return detectionRadius; }
 	void SetDetectionRadius(int value) { detectionRadius = value; }
 
+	bool isCaught() { return caught; }
+	void Catch() { caught = true; }
 
 private:
 	int topspeed;
 	int detectionRadius;
 	int force;
+
+	bool caught;
 
 	MovingBeeBehaviour* behaviour;
 	double m_dTimeElapsed;

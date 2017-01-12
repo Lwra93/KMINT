@@ -10,7 +10,7 @@ class Map;
 class AStar
 {
 public:
-	AStar(GameObject *beekeeper, Map *graph, GameObject *bee);
+	AStar(GameObject *beekeeper, Map *graph, Vertex* goal);
 	void Algorithm(Vertex *start, Vertex *goal, map<Vertex*, Vertex*>& came_from, map<Vertex*, int>& cost_so_far);
 	int heuristic(Vertex* a, Vertex* b);
 	~AStar();

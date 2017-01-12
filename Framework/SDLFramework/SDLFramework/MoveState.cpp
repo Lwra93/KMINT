@@ -12,6 +12,7 @@ MoveState::MoveState()
 
 void MoveState::handle()
 {
+
 	goalX = beekeeper->getGoalVertex()->getX();
 	goalY = beekeeper->getGoalVertex()->getY();
 
