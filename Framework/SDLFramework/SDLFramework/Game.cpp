@@ -72,10 +72,12 @@ Game::Game(FWApplication* application, Map *graph)
 			case SDL_KEYDOWN:
 				switch (event.key.keysym.sym) {
 				case SDLK_RETURN:
-					gameSpeed *= 10;
+					if(gameSpeed * 10 <= 60)
+						gameSpeed *= 10;
 					break;
 				case SDLK_SPACE:
-					gameSpeed /= 10;
+					if(gameSpeed / 10 >= 2)
+						gameSpeed /= 10;
 					break;
 				default:
 					break;
