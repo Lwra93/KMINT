@@ -1,10 +1,12 @@
 #pragma once
 #include "State.h"
 
-class SuperState : public State
+class MoveState :
+	public State
 {
 public:
-	SuperState();
+	MoveState();
+
 	void handle() override;
 	void changeState() override;
 	string getStateName() override;

@@ -95,13 +95,14 @@
     <ClCompile Include="ForceDrivenEntity.cpp" />
     <ClCompile Include="FWApplication.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="IState.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="MoveState.cpp" />
     <ClCompile Include="PanicState.cpp" />
     <ClCompile Include="PowerUp.cpp" />
     <ClCompile Include="PowerUpState.cpp" />
+    <ClCompile Include="State.cpp" />
     <ClCompile Include="SuperState.cpp" />
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="Vector2D.cpp" />
@@ -127,9 +128,11 @@
     <ClInclude Include="IGameObject.h" />
     <ClInclude Include="IState.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="MoveState.h" />
     <ClInclude Include="PanicState.h" />
     <ClInclude Include="PowerUp.h" />
     <ClInclude Include="PowerUpState.h" />
+    <ClInclude Include="State.h" />
     <ClInclude Include="SuperState.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="Vector2D.h" />

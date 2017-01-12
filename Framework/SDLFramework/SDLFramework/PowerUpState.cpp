@@ -8,18 +8,21 @@ PowerUpState::PowerUpState()
 {
 }
 
-void PowerUpState::handle(Beekeeper *beekeeper, Map* graph, GameObject* powerup)
+void PowerUpState::handle()
 {
-	AStar(beekeeper, graph, powerup);
+	AStar(beekeeper, beekeeper->getGame()->getGraph(), beekeeper->getGame()->getPowerUp());
 }
 
-void PowerUpState::changeState(Beekeeper* beekeeper, Base* base, PowerUp* powerup)
+void PowerUpState::changeState()
 {
-	base->emptyNet(beekeeper->removeBees());
+	beekeeper->getGame()->getBase()->emptyNet(beekeeper->removeBees());
 	SuperState* super = new SuperState();
 	beekeeper->setState(super);
 	beekeeper->setMaxBees(beekeeper->getMaxBees() * 3);
 	beekeeper->changeTexture("beekeeper_super.png");
+	super->setBeekeeper(beekeeper);
+	//auto newSpeed = beekeeper->getGame()->getSpeed() * 3;
+	//beekeeper->getGame()->setSpeed(newSpeed);
 	//snelheid lopen x3
 }
 
@@ -28,3 +31,11 @@ string PowerUpState::getStateName()
 	return "PowerUpState";
 }
 
+void PowerUpState::update()
+{
+	if (beekeeper->collides(beekeeper->getGame()->getPowerUp()))
+	{
+		beekeeper->getGame()->getPowerUp()->setCurrentVertex(beekeeper->getGame()->getGraph()->randomVertex(beekeeper->getGame()->getPowerUp()->getCurrentVertex()));
+		beekeeper->getState()->changeState();
+	}
+}

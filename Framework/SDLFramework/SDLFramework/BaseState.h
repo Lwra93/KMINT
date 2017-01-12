@@ -1,12 +1,13 @@
 #pragma once
-#include "IState.h"
+#include "State.h"
 
-class BaseState : public IState
+class BaseState : public State
 {
 public:
 	BaseState();
-	void handle(Beekeeper *beekeeper, Map *graph, GameObject *object2) override;
-	void changeState(Beekeeper* beekeeper, Base* base, PowerUp* powerup) override;
+	void handle() override;
+	void changeState() override;
 	string getStateName() override;
+	void update() override;
 };
 

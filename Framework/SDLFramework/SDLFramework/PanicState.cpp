@@ -2,12 +2,13 @@
 #include "Game.h"
 #include "BaseState.h"
 #include "Util.h"
+#include "Beekeeper.h"
 
 PanicState::PanicState()
 {
 }
 
-void PanicState::handle(Beekeeper *beekeeper, Map *graph, GameObject *object2)
+void PanicState::handle()
 {
 	auto loc = beekeeper->getCurrentVertex();
 	auto connections = loc->getConnections();
@@ -23,16 +24,22 @@ void PanicState::handle(Beekeeper *beekeeper, Map *graph, GameObject *object2)
 	}
 }
 
-void PanicState::changeState(Beekeeper* beekeeper, Base* base, PowerUp* powerup)
+void PanicState::changeState()
 {
 	if (beekeeper->getBees() == 0)
 	{
 		BaseState* baseState = new BaseState();
 		beekeeper->setState(baseState);
+		baseState->setBeekeeper(beekeeper);
 	}
 }
 
 string PanicState::getStateName()
 {
 	return "PanicState";
+}
+
+void PanicState::update()
+{
+	beekeeper->getState()->changeState();
 }

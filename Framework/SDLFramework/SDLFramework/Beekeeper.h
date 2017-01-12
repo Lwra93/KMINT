@@ -4,7 +4,7 @@
 class Beekeeper : public GameObject
 {
 public:
-	Beekeeper();
+	Beekeeper(const Game* game);
 	void increaseNetSize();
 	int getNetSize();
 	void resetNet();
@@ -21,7 +21,7 @@ public:
 	double getBaseChance();
 
 	~Beekeeper();
-
+	const Game* getGame();
 private:
 	int netSize;
 	int beesInNet;

@@ -2,7 +2,7 @@
 
 
 
-PowerUp::PowerUp()
+PowerUp::PowerUp(const Game* game): GameObject(game)
 {
 	this->texture = mApplication->LoadTexture("pill2.png");
 	this->SetTexture(texture);

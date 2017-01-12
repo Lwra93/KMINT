@@ -8,22 +8,35 @@ BaseState::BaseState()
 {
 }
 
-void BaseState::handle(Beekeeper *beekeeper, Map* graph, GameObject* base)
+void BaseState::handle()
 {
-	AStar(beekeeper, graph, base);
+	AStar(beekeeper, beekeeper->getGame()->getGraph(), beekeeper->getGame()->getBase());
 }
 
-void BaseState::changeState(Beekeeper* beekeeper, Base* base, PowerUp* powerup)
+
+
+void BaseState::changeState()
 {
-	base->emptyNet(beekeeper->removeBees());
+	beekeeper->getGame()->getBase()->emptyNet(beekeeper->removeBees());
 	beekeeper->resetNet();
 	ChaseState* chase = new ChaseState();
+	chase->setBeekeeper(beekeeper);
 	beekeeper->setState(chase);
 	beekeeper->setMaxBees(10);
 	beekeeper->changeTexture("beekeeper.png");
 }
 
+
 string BaseState::getStateName()
 {
 	return "BaseState";
 }
+
+void BaseState::update()
+{
+	if (beekeeper->collides(beekeeper->getGame()->getBase()))
+	{
+		beekeeper->getState()->changeState();
+	}
+}
+

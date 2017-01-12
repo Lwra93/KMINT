@@ -1,10 +1,11 @@
 #pragma once
 #include "GameObject.h"
 
+
 class Base : public GameObject
 {
 public:
-	Base();
+	Base(const Game* game);
 	void emptyNet(int bees);
 	int getBees();
 	~Base();

@@ -2,17 +2,18 @@
 #include "Game.h"
 #include "AStar.h"
 #include "BaseState.h"
+#include "Beekeeper.h"
 
 SuperState::SuperState()
 {
 }
 
-void SuperState::handle(Beekeeper *beekeeper, Map * graph, GameObject * bee)
+void SuperState::handle()
 {
-	AStar(beekeeper, graph, bee);
+	AStar(beekeeper, beekeeper->getGame()->getGraph(), beekeeper->getGame()->getBee());
 }
 
-void SuperState::changeState(Beekeeper* beekeeper, Base* base, PowerUp* powerup)
+void SuperState::changeState()
 {
 	beekeeper->addBee();
 
@@ -21,9 +22,19 @@ void SuperState::changeState(Beekeeper* beekeeper, Base* base, PowerUp* powerup)
 
 	BaseState* baseState = new BaseState();
 	beekeeper->setState(baseState);
+	baseState->setBeekeeper(beekeeper);
 }
 
 string SuperState::getStateName()
 {
 	return "SuperState";
+}
+
+void SuperState::update()
+{
+	if (beekeeper->collides(beekeeper->getGame()->getBase()/*eigenlijk bee!!!*/))
+	{
+		beekeeper->getGame()->getBee()->setCurrentVertex(beekeeper->getGame()->getGraph()->randomVertex(beekeeper->getGame()->getBee()->getCurrentVertex()));
+		beekeeper->getState()->changeState();
+	}
 }

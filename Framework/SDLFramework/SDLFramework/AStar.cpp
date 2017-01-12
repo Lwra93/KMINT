@@ -27,8 +27,6 @@ AStar::AStar(GameObject *beekeeper, Map *graph, GameObject *bee)
 	if (nextVertex != nullptr)
 	{
 		beekeeper->setGoalVertex(nextVertex);
-		
-		//beekeeper->setCurrentVertex(nextVertex);
 	}
 }
 

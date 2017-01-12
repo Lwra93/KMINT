@@ -4,10 +4,11 @@
 #include <queue>
 #include "Map.h"
 #include <map>
+#include "Game.h"
 
-GameObject::GameObject()
+GameObject::GameObject(const Game* game)
 {
-	
+	this->game = game;
 }
 
 
@@ -128,7 +129,7 @@ IState* GameObject::getState()
 	return state;
 }
 
-void GameObject::action(Beekeeper* obj1, GameObject* obj2, Map *graph) const
+void GameObject::action() const
 {
-	this->state->handle(obj1, graph, obj2);
+	this->state->handle();
 }

@@ -10,8 +10,9 @@ class GameObject;
 class IState
 {
 public:
-	~IState();
-	virtual void handle(Beekeeper *beekeeper, Map *graph, GameObject *object2 = nullptr) = 0;
-	virtual void changeState(Beekeeper* beekeeper, Base* base, PowerUp* powerup) = 0;
+	virtual void handle() = 0;
+	virtual void changeState() = 0;
 	virtual string getStateName() = 0;
+	virtual void update() = 0;
 };
+

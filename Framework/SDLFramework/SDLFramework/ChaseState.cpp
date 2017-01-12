@@ -10,44 +10,65 @@
 #include "PowerUpState.h"
 #include "BaseState.h"
 #include "PanicState.h"
+#include "MoveState.h"
 
 ChaseState::ChaseState()
 {
 }
 
-void ChaseState::handle(Beekeeper *beekeeper, Map *graph, GameObject *bee)
+void ChaseState::handle()
 {
-	AStar(beekeeper, graph, bee);
+	AStar(beekeeper, beekeeper->getGame()->getGraph(), beekeeper->getGame()->getBee());
+	State* state = nullptr;
+	state = new MoveState();
+	beekeeper->setState(state);
+	if (state != nullptr)
+		state->setBeekeeper(beekeeper);
 }
 
-void ChaseState::changeState(Beekeeper* beekeeper, Base* base, PowerUp* powerup)
+void ChaseState::changeState()
 {
+	
+
 	beekeeper->addBee();
 
 	if(beekeeper->getBees() < beekeeper->getMaxBees())
 		return;
 
 	auto randomNr = Util::randomDouble(1, 100);
-
+	State* state = nullptr;
+	//state = new MoveState();
+	//beekeeper->setState(state);
 	if(randomNr >= 0 && randomNr < beekeeper->getPowerupChance())
 	{
-		PowerUpState* powerUpState = new PowerUpState();
-		beekeeper->setState(powerUpState);
+		state = new PowerUpState();
+		beekeeper->setState(state);
 	}
 	else if(randomNr >= beekeeper->getPowerupChance() && randomNr < beekeeper->getPowerupChance()+beekeeper->getBaseChance())
 	{
-		BaseState* baseState = new BaseState();
-		beekeeper->setState(baseState);
+		state = new BaseState();
+		beekeeper->setState(state);
 	}
 	else if(randomNr >= beekeeper->getBaseChance() && randomNr <= beekeeper->getPowerupChance() + beekeeper->getBaseChance()+beekeeper->getPanicChance())
 	{
-		PanicState* panicState = new PanicState();
-		beekeeper->setState(panicState);
+		state = new PanicState();
+		beekeeper->setState(state);
 		beekeeper->changeTexture("beekeeper_panic.png");
 	}
+	if(state != nullptr)
+		state->setBeekeeper(beekeeper);
 }
 
 string ChaseState::getStateName()
 {
 	return "ChaseState";
+}
+
+void ChaseState::update()
+{
+	if(beekeeper->collides(beekeeper->getGame()->getBase()/*eigenlijk bee!!!*/))
+	{
+		beekeeper->getGame()->getBee()->setCurrentVertex(beekeeper->getGame()->getGraph()->randomVertex(beekeeper->getGame()->getBee()->getCurrentVertex()));
+		beekeeper->getState()->changeState();
+	}
 }

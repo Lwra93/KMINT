@@ -1,14 +1,14 @@
 #pragma once
 #include "Beekeeper.h"
+#include "Game.h"
 
-Beekeeper::Beekeeper() : GameObject::GameObject()
+Beekeeper::Beekeeper(const Game* game) : GameObject::GameObject(game)
 {
 	this->texture = mApplication->LoadTexture("beekeeper.png");
 	this->SetTexture(texture);
 	this->SetSize(50, 83);
 	this->netSize = 30;
 	this->maxBees = 10;
-
 	this->panicChance = 33.3;
 	this->powerupChance = 33.3;
 	this->baseChance = 33.3;
@@ -85,4 +85,9 @@ double Beekeeper::getBaseChance()
 
 Beekeeper::~Beekeeper()
 {
+}
+
+const Game* Beekeeper::getGame()
+{
+	return this->game;
 }

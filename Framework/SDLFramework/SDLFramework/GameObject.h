@@ -6,12 +6,13 @@
 #include "Map.h"
 #include "Vector2D.h"
 
+class Game;
 class Beekeeper;
 class IState;
 
 class GameObject : public IGameObject {
 public:
-	GameObject();
+	GameObject(const Game* game);
 	~GameObject();
 	void Update(float deltaTime);
 	void chase(GameObject *object);
@@ -25,14 +26,14 @@ public:
 	bool collides(GameObject *object) const;
 	void setState(IState* state);
 	IState* getState();
-	void action(Beekeeper*, GameObject*, Map*) const;
+	void action() const;
 
 protected:
 	IState* state;
 	SDL_Texture *texture;
 	Vector2D* location;
 	Vector2D goalLocation;
-
+	const Game* game;
 	Vertex* curVertex;
 	Vertex* goalVertex;
 };
