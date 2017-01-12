@@ -5,7 +5,7 @@
 class Base : public GameObject
 {
 public:
-	Base(const Game* game);
+	Base(Game* game);
 	void emptyNet(int bees);
 	int getBees();
 	~Base();

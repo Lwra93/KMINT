@@ -14,7 +14,7 @@ class State;
 
 class GameObject : public IGameObject {
 public:
-	GameObject(const Game* game);
+	GameObject(Game* game);
 	~GameObject();
 	void Update(float deltaTime) override;
 	void chase(GameObject *object);
@@ -35,7 +35,7 @@ protected:
 	SDL_Texture *texture;
 	Vector2D* location;
 	Vector2D goalLocation;
-	const Game* game;
+	Game* game;
 	Vertex* curVertex;
 	Vertex* goalVertex;
 };

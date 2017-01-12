@@ -4,7 +4,7 @@
 class PowerUp : public GameObject
 {
 public:
-	PowerUp(const Game* game);
+	PowerUp(Game* game);
 	~PowerUp();
 };
 

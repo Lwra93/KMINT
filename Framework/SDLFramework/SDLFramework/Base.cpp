@@ -1,6 +1,6 @@
 #include "Base.h"
 
-Base::Base(const Game* game): GameObject(game)
+Base::Base(Game* game): GameObject(game)
 {
 	this->texture = mApplication->LoadTexture("beehive.png");
 	this->SetTexture(texture);

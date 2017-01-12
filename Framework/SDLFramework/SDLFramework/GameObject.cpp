@@ -6,7 +6,7 @@
 #include <map>
 #include "Game.h"
 
-GameObject::GameObject(const Game* game)
+GameObject::GameObject(Game* game)
 {
 	this->game = game;
 }
@@ -62,7 +62,9 @@ Vertex* GameObject::getGoalVertex()
 bool GameObject::collides(GameObject *object) const
 {
 
-	return this->location == object->getLocation();
+
+
+	return this->location->x == object->getLocation()->x && this->location->y == object->getLocation()->y;
 
 }
 

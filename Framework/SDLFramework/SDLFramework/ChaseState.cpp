@@ -11,6 +11,8 @@
 #include "MoveState.h"
 #include "StateFactory.h"
 #include "Beekeeper.h"
+#include <iostream>
+#include <string>
 
 ChaseState::ChaseState()
 {
@@ -53,9 +55,10 @@ string ChaseState::getStateName()
 
 void ChaseState::update()
 {
-	if(beekeeper->collides(beekeeper->getGame()->getBase()/*eigenlijk bee!!!*/))
+	if(beekeeper->collides(beekeeper->getGame()->getBee()/*eigenlijk bee!!!*/))
 	{
-		beekeeper->getGame()->getBee()->setCurrentVertex(beekeeper->getGame()->getGraph()->randomVertex(beekeeper->getGame()->getBee()->getCurrentVertex()));
+		beekeeper->getGame()->getBee()->setCurrentVertex(beekeeper->getGame()->getGraph()->randomVertex(beekeeper->getCurrentVertex()));
 		beekeeper->getState()->changeState();
 	}
+
 }

@@ -1,7 +1,7 @@
 #include "bee.h"
 #include "Game.h"
 
-Bee::Bee(const Game* game): GameObject(game)
+Bee::Bee(Game* game): GameObject(game)
 {
 	//_color = color;
 	this->SetTexture(mApplication->LoadTexture("bee.png"));

@@ -23,7 +23,7 @@ Bee* Game::createBee(Vector2D SpawnPos, std::string color)
 
 Game::Game(FWApplication* application, Map *graph)
 {	
-	gameSpeed = 10;
+	gameSpeed = 2;
 
 	beekeeper = new Beekeeper(this);
 	base = new Base(this);
@@ -58,6 +58,31 @@ Game::Game(FWApplication* application, Map *graph)
 	//while (true){}
 	while (application->IsRunning())
 	{
+
+		application->StartTick();
+
+		SDL_Event event;
+		while (SDL_PollEvent(&event))
+		{
+			switch (event.type)
+			{
+			case SDL_QUIT:
+				application->Quit();
+				break;
+			case SDL_KEYDOWN:
+				switch (event.key.keysym.sym) {
+				case SDLK_RETURN:
+					gameSpeed *= 10;
+					break;
+				case SDLK_SPACE:
+					gameSpeed /= 10;
+					break;
+				default:
+					break;
+				}
+			}
+		}
+
 		this_time = clock();
 		time_counter += static_cast<double>((this_time - last_time));
 		last_time = this_time;
@@ -67,7 +92,7 @@ Game::Game(FWApplication* application, Map *graph)
 			time_counter -= static_cast<double>(1 * CLOCKS_PER_SEC);
 			beekeeper->increaseNetSize();
 		}
-		application->StartTick();
+		
 
 		beekeeper->action();
 		beekeeper->update();

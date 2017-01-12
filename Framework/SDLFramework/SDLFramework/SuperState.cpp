@@ -11,6 +11,7 @@ SuperState::SuperState()
 
 void SuperState::handle()
 {
+
 	AStar(beekeeper, beekeeper->getGame()->getGraph(), beekeeper->getGame()->getBee());
 	beekeeper->setState(StateFactory::getInstance()->getNextBeekeeperState(beekeeper, "MoveState"));
 
@@ -33,7 +34,7 @@ string SuperState::getStateName()
 
 void SuperState::update()
 {
-	if (beekeeper->collides(beekeeper->getGame()->getBase()/*eigenlijk bee!!!*/))//TODO
+	if (beekeeper->collides(beekeeper->getGame()->getBee()/*eigenlijk bee!!!*/))//TODO
 	{
 		beekeeper->getGame()->getBee()->setCurrentVertex(beekeeper->getGame()->getGraph()->randomVertex(beekeeper->getGame()->getBee()->getCurrentVertex()));
 		beekeeper->getState()->changeState();

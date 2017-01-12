@@ -2,7 +2,7 @@
 #include "Beekeeper.h"
 #include "Game.h"
 
-Beekeeper::Beekeeper(const Game* game) : GameObject::GameObject(game)
+Beekeeper::Beekeeper(Game* game) : GameObject::GameObject(game)
 {
 	this->texture = mApplication->LoadTexture("beekeeper.png");
 	this->SetTexture(texture);
@@ -96,7 +96,7 @@ Beekeeper::~Beekeeper()
 {
 }
 
-const Game* Beekeeper::getGame()
+Game* Beekeeper::getGame()
 {
 	return this->game;
 }
