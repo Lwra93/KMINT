@@ -27,6 +27,7 @@ public:
 	void setState(IState* state);
 	IState* getState();
 	void action() const;
+	void update() const;
 
 protected:
 	IState* state;

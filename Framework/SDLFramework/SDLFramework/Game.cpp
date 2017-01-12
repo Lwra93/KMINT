@@ -68,7 +68,7 @@ Game::Game(FWApplication* application, Map *graph)
 		application->StartTick();
 
 		beekeeper->action();
-		beekeeper->getState()->update();
+		beekeeper->update();
 
 		// Graph drawing
 		graph->draw(*application);

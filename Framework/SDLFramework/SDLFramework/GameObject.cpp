@@ -133,3 +133,8 @@ void GameObject::action() const
 {
 	this->state->handle();
 }
+
+void GameObject::update() const
+{
+	this->state->update();
+}
