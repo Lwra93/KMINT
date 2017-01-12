@@ -1,6 +1,8 @@
 #pragma once
 #include "Vector2D.h"
 #include "C2DMatrix.h"
+#include "GameObject.h"
+
 class ForceDrivenEntity
 {
 protected:
@@ -117,6 +119,12 @@ public:
 					AmountOfOverLap);
 			}
 		}//next entity
+
+
+
 	}
+
+
+
 };
 

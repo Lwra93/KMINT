@@ -27,7 +27,6 @@ public:
 	double getBaseChance();
 
 	~Beekeeper();
-	Game* getGame();
 private:
 	int netSize;
 	int beesInNet;

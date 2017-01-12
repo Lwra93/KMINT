@@ -15,8 +15,8 @@ void MoveState::handle()
 	goalX = beekeeper->getGoalVertex()->getX();
 	goalY = beekeeper->getGoalVertex()->getY();
 
-	beekeeperX = this->beekeeper->getLocation()->x;
-	beekeeperY = this->beekeeper->getLocation()->y;
+	beekeeperX = this->beekeeper->getLocation().x;
+	beekeeperY = this->beekeeper->getLocation().y;
 
 	deltaX = goalX - beekeeperX;
 	deltaY = goalY - beekeeperY;

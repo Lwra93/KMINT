@@ -26,7 +26,10 @@ FWApplication::FWApplication(int offsetX, int offsetY, int width, int height)
 		return;
 	}
 
-	mWindow = SDL_CreateWindow("KMint framework", offsetX, offsetY, width, height, SDL_WINDOW_SHOWN);
+	this->width = width;
+	this->height = height;
+
+	mWindow = SDL_CreateWindow("Chase tha bees 2.x", offsetX, offsetY, width, height, SDL_WINDOW_SHOWN);
 	if (!mWindow)
 	{
 		LOG(SDL_GetError());
@@ -187,6 +190,7 @@ void FWApplication::UpdateGameObjects()
 			}
 		}
 		obj->Update((float)mDeltaTimeMS / 1000.0f);
+
 	}
 }
 

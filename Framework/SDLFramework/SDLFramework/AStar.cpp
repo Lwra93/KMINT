@@ -9,7 +9,7 @@ AStar::AStar(GameObject *beekeeper, Map *graph, GameObject *bee)
 	std::map<Vertex*, Vertex*> fromTo;
 
 	for (auto p : graph->getVertexes()) {
-		if (p->getX() == beekeeper->getLocation()->x && p->getY() == beekeeper->getLocation()->y)
+		if (p->getX() == beekeeper->getLocation().x && p->getY() == beekeeper->getLocation().y)
 			mapNodeWeight[p] = 0;
 		else
 			mapNodeWeight[p] = INT_MAX;

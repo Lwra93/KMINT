@@ -155,6 +155,17 @@ void Vector2D::Normalize()
 	}
 }
 
+void Vector2D::Normalize(const int speed)
+{
+	double vector_length = this->Length();
+
+	if (vector_length > std::numeric_limits<double>::epsilon())
+	{
+		this->x /= speed;
+		this->y /= speed;
+	}
+}
+
 
 //------------------------------------------------------------------------non member functions
 

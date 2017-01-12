@@ -18,8 +18,8 @@ GameObject::~GameObject() {
 }
 
 void GameObject::Update(float deltaTime) {
-	if(this->location != nullptr)
-		SetOffset(location->x, location->y);
+	//if(this->location != nullptr)
+	SetOffset(location.x, location.y);
 }
 
 void GameObject::chase(GameObject *object)
@@ -29,11 +29,11 @@ void GameObject::chase(GameObject *object)
 
 void GameObject::setLocation(double x, double y)
 {
-	this->location = new Vector2D(x, y);
+	this->location = Vector2D(x, y);
 
 }
 
-Vector2D* GameObject::getLocation() const
+Vector2D GameObject::getLocation() const
 {
 	return this->location;
 }
@@ -62,9 +62,7 @@ Vertex* GameObject::getGoalVertex()
 bool GameObject::collides(GameObject *object) const
 {
 
-
-
-	return this->location->x == object->getLocation()->x && this->location->y == object->getLocation()->y;
+	return this->location.x == object->getLocation().x && this->location.y == object->getLocation().y;
 
 }
 
@@ -86,4 +84,9 @@ void GameObject::action() const
 void GameObject::update() const
 {
 	this->state->update();
+}
+
+Game* GameObject::getGame()
+{
+	return this->game;
 }

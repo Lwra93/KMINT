@@ -19,7 +19,7 @@ public:
 	void Update(float deltaTime) override;
 	void chase(GameObject *object);
 	void setLocation(double x, double y);
-	Vector2D* getLocation() const;
+	Vector2D getLocation() const;
 	void setCurrentVertex(Vertex* vertex);
 	Vertex* getCurrentVertex();
 	void setGoalVertex(Vertex* vertex);
@@ -30,10 +30,12 @@ public:
 	void action() const;
 	void update() const;
 
+	Game* getGame();
+
 protected:
 	State* state;
 	SDL_Texture *texture;
-	Vector2D* location;
+	Vector2D location;
 	Vector2D goalLocation;
 	Game* game;
 	Vertex* curVertex;

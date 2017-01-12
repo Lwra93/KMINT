@@ -95,8 +95,3 @@ double Beekeeper::getBaseChance()
 Beekeeper::~Beekeeper()
 {
 }
-
-Game* Beekeeper::getGame()
-{
-	return this->game;
-}

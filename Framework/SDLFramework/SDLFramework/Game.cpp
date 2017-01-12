@@ -7,43 +7,46 @@
 #undef DrawText
 
 
-Bee* Game::createBee(Vector2D SpawnPos, std::string color)
+Bee* Game::createBee(Vector2D SpawnPos)
 {
-	//return new Bee(this,
-	//               SpawnPos, //initial position
-	//               100, //start rotation
-	//               Vector2D(160, 160), //velocity
-	//               1.0, //mass
-	//               400.0, //max force
-	//               160.0, //max velocity
-	//               3.14159, //max turn rate
-	//               1.0, color);
-	return nullptr;
+	return new Bee(this,
+	               SpawnPos, //initial position
+	               100, //start rotation
+	               Vector2D(50, 50), //velocity
+	               1.0, //mass
+	               400.0, //max force
+	               160.0, //max velocity
+	               3.14159, //max turn rate
+	               1.0);
 }
 
 Game::Game(FWApplication* application, Map *graph)
 {	
 	gameSpeed = 2;
+	int amountOfBees = 100;
 
 	beekeeper = new Beekeeper(this);
 	base = new Base(this);
 	powerup = new PowerUp(this);
-	this->bee = new Bee(this);
 	this->graph = graph;
 	
+	m_pCellSpace = new CellSpacePartition<Bee*>((double)application->getWidth(), (double)application->getHeight(), 7, 7, amountOfBees + 1);
+
 	//autospawnen TODO
 	Vector2D SpawnPos = Vector2D(600, 400);
 	std::string color = "";
-	//this->bee = createBee(SpawnPos, color);
+	createBees();
+	
+	
 
 	//vaste objecten
 	beekeeper->setCurrentVertex(graph->randomVertex(beekeeper->getCurrentVertex()));
 	powerup->setCurrentVertex(graph->randomVertex(powerup->getCurrentVertex()));
 	base->setCurrentVertex(graph->getVertex(0));
-	bee->setCurrentVertex(graph->randomVertex(bee->getCurrentVertex()));
+	//bee->setCurrentVertex(graph->randomVertex(bee->getCurrentVertex()));
 
 	application->AddRenderable(base);
-	application->AddRenderable(bee);
+	//application->AddRenderable(bee);
 	application->AddRenderable(beekeeper);
 	application->AddRenderable(powerup);
 
@@ -94,10 +97,14 @@ Game::Game(FWApplication* application, Map *graph)
 			time_counter -= static_cast<double>(1 * CLOCKS_PER_SEC);
 			beekeeper->increaseNetSize();
 		}
-		
 
-		beekeeper->action();
-		beekeeper->update();
+		for(auto bee : bees)
+		{
+			bee->Move((float)application->mDeltaTimeMS / 1000.0f);
+		}
+
+		//beekeeper->action();
+		//beekeeper->update();
 
 		// Graph drawing
 		graph->draw(*application);
@@ -113,10 +120,13 @@ Game::Game(FWApplication* application, Map *graph)
 
 
 		//draw net around beekeeper
-		int x = beekeeper->getLocation()->x;
-		int y = beekeeper->getLocation()->y;
+		int x = beekeeper->getLocation().x;
+		int y = beekeeper->getLocation().y;
 		application->SetColor(Color(0, 128, 255, 100));
 		application->DrawCircle(x, y, beekeeper->getNetSize(), true);
+
+
+
 
 		// For the background
 		application->SetColor(Color(255, 255, 255, 255));
@@ -130,7 +140,9 @@ Game::Game(FWApplication* application, Map *graph)
 	delete(base);
 	delete(powerup);
 	delete(beekeeper);
-	delete(bee);
+
+	for (auto bee : bees)
+		delete(bee);
 	
 }
 
@@ -150,9 +162,35 @@ Base* Game::getBase() const
 	return this->base;
 }
 
+vector<Bee*> Game::getBees() const
+{
+	return this->bees;
+}
+
 Bee* Game::getBee() const
 {
-	return this->bee;
+	return nullptr;
+}
+
+Beekeeper* Game::getBeekeeper() const
+{
+	return this->beekeeper;
+}
+
+
+
+void Game::createBees()
+{
+
+	for(auto i = 0; i < 100; i++)
+	{
+		auto location = graph->randomVertex(nullptr);
+		auto bee = createBee(Vector2D(location->getX(), location->getY()));
+		bee->SetDetectionRadius(100);
+		bees.emplace_back(bee);
+		m_pCellSpace->AddEntity(bee);
+	}
+
 }
 
 PowerUp* Game::getPowerUp() const

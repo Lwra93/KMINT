@@ -27,6 +27,7 @@ public:
 	double    LengthSq()const;
 
 	void      Normalize();
+	void      Normalize(const int speed);
 
 	double Vec2DDistanceSq(const Vector2D & v1, const Vector2D & v2);
 

@@ -49,6 +49,11 @@ public:
 	FWApplication(int offsetX = 50, int offsetY = 50, int width = 600, int height = 600);
 	~FWApplication();
 
+	int width, height;
+
+	const int getWidth() { return width; }
+	const int getHeight() { return height; }
+
 	void SetTargetFPS(unsigned short target);
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -244,6 +249,9 @@ public:
 	void Quit();
 	//void AddOnEvent(std::function<void(SDL_Event*)> func);
 
+	uint32_t mDeltaTimeMS; // The actual loop cycle time
+
+
 private:
 	std::vector<IGameObject *> mGameObjects;
 	static FWApplication * mInstance;
@@ -254,7 +262,7 @@ private:
 	uint32_t mTimeMS;
 	uint32_t mTargetDelayMS;
 	uint32_t mStartCycleTimeMS;
-	uint32_t mDeltaTimeMS; // The actual loop cycle time
+	
 
 	bool mIsRunning;
 
