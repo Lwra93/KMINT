@@ -11,47 +11,44 @@ MoveState::MoveState()
 
 void MoveState::handle()
 {
-	double x = beekeeper->getGoalVertex()->getX();
-	double y = beekeeper->getGoalVertex()->getY();
-	Vector2D goalLocation = Vector2D(x, y);
+	goalX = beekeeper->getGoalVertex()->getX();
+	goalY = beekeeper->getGoalVertex()->getY();
 
-	bool goalreached = false;
-	double tempX = this->beekeeper->getLocation()->x;
-	double tempY = this->beekeeper->getLocation()->y;
+	beekeeperX = this->beekeeper->getLocation()->x;
+	beekeeperY = this->beekeeper->getLocation()->y;
 
-	double deltaX = x - tempX;
-	double deltaY = y - tempY;
+	deltaX = goalX - beekeeperX;
+	deltaY = goalY - beekeeperY;
 
-	bool moveUp = deltaY >= 0 ? true : false;
-	bool moveRight = deltaX >= 0 ? true : false;
+	moveUp = deltaY >= 0 ? true : false;
+	moveRight = deltaX >= 0 ? true : false;
 
-	Vector2D vector = Vector2D(deltaX, deltaY);
-	vector.Normalize();
+	unitVector = Vector2D(deltaX, deltaY);
+	unitVector.Normalize();
 
-	tempX += (vector.x /** beekeeper->getGame()->getSpeed()*/);
-	tempY += (vector.y /** beekeeper->getGame()->getSpeed()*/);
+	beekeeperX += (unitVector.x * beekeeper->getGame()->getSpeed());
+	beekeeperY += (unitVector.y * beekeeper->getGame()->getSpeed());
 
-	this->beekeeper->setLocation(tempX, tempY);
+	this->beekeeper->setLocation(beekeeperX, beekeeperY);
 
 	if (moveUp && moveRight)
 	{
-		if (tempX >= x && tempY >= y)
+		if (beekeeperX >= goalX && beekeeperY >= goalY)
 			this->changeState();
-			
 	}
 	else if (!moveUp && !moveRight)
 	{
-		if (tempX <= x && tempY <= y)
+		if (beekeeperX <= goalX && beekeeperY <= goalY)
 			this->changeState();
 	}
 	else if (moveUp && !moveRight)
 	{
-		if (tempX <= x && tempY >= y)
+		if (beekeeperX <= goalX && beekeeperY >= goalY)
 			this->changeState();
 	}
 	else if (!moveUp && moveRight)
 	{
-		if (tempX >= x && tempY <= y)
+		if (beekeeperX >= goalX && beekeeperY <= goalY)
 			this->changeState();
 	}
 }
@@ -71,5 +68,6 @@ string MoveState::getStateName()
 
 void MoveState::update()
 {
+	
 }
 

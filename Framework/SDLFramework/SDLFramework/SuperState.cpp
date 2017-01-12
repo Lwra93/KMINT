@@ -32,7 +32,7 @@ string SuperState::getStateName()
 
 void SuperState::update()
 {
-	if (beekeeper->collides(beekeeper->getGame()->getBase()/*eigenlijk bee!!!*/))
+	if (beekeeper->collides(beekeeper->getGame()->getBase()/*eigenlijk bee!!!*/))//TODO
 	{
 		beekeeper->getGame()->getBee()->setCurrentVertex(beekeeper->getGame()->getGraph()->randomVertex(beekeeper->getGame()->getBee()->getCurrentVertex()));
 		beekeeper->getState()->changeState();

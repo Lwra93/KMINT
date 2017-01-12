@@ -67,65 +67,13 @@ Game::Game(FWApplication* application, Map *graph)
 		}
 		application->StartTick();
 
-		//SDL_Event event;
-		//while (SDL_PollEvent(&event))
-		//{
-		//	switch (event.type)
-		//	{
-		//	case SDL_QUIT:
-		//		application->Quit();
-		//		break;
-		//	case SDL_KEYDOWN:
-		//		switch (event.key.keysym.sym) {
-		//		case SDLK_UP:
-		//			/*beekeeper->action();
-		//			beekeeper->getState()->changeState();*/
-		//			//if (beekeeper->getState()->getStateName() == "ChaseState")
-		//			//{
-		//			//	if (beekeeper->moveTo(beekeeper->getGoalVertex()->getX(), beekeeper->getGoalVertex()->getY(), application))
-		//			//		beekeeper->setCurrentVertex(beekeeper->getGoalVertex());
-		//			//	
-		//			//}
-		//			
-		//			graph->resetCosts();
-		//			break;
-		//		default:
-		//			break;
-		//		}
-		//	}
-		//}
-
 		beekeeper->action();
-
-		//beekeeper->getState()->changeState();
-
 		beekeeper->getState()->update();
-
-		//if (beekeeper->collides(base/*eigenlijk bee!!!*/) && (beekeeper->getState()->getStateName() == "ChaseState" || beekeeper->getState()->getStateName() == "SuperState"))
-		//{
-		//	bee->setCurrentVertex(graph->randomVertex(bee->getCurrentVertex()));
-		//	beekeeper->getState()->changeState();
-		//}
-		//else if (beekeeper->collides(powerup) && beekeeper->getState()->getStateName() == "PowerUpState")
-		//{
-		//	powerup->setCurrentVertex(graph->randomVertex(powerup->getCurrentVertex()));
-		//	beekeeper->getState()->changeState();
-		//}
-		//else if (beekeeper->collides(base) && beekeeper->getState()->getStateName() == "BaseState")
-		//{
-		//	beekeeper->getState()->changeState();
-		//}
-		//else if(beekeeper->getState()->getStateName() == "PanicState")
-		//{
-		//	beekeeper->getState()->changeState();
-		//	
-		//}
-
 
 		// Graph drawing
 		graph->draw(*application);
 
-		// stats
+		// stats TODO FIXEN
 		application->SetColor(Color(0, 0, 0, 255));
 		//application->DrawText("",0,0);
 		//("Bijen in mijn net: " + to_string(beekeeper->getBees()), 510, 520);
