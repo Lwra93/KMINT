@@ -24,6 +24,7 @@ void SuperState::changeState()
 	if (beekeeper->getBees() < beekeeper->getMaxBees())
 		return;
 
+	beekeeper->getGame()->setSpeed(beekeeper->getGame()->getSpeed() / 3);
 	beekeeper->setState(StateFactory::getInstance()->getNextBeekeeperState(beekeeper, "BaseState"));
 }
 
