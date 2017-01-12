@@ -21,7 +21,7 @@ State* StateFactory::getNextBeekeeperState(Beekeeper* beekeeper, string nextStat
 {
 	State* returnState = nullptr;
 
-	if (beekeeper->getPrevState() != beekeeper->getState()->getStateName()) //ithink.
+	if (beekeeper->getState() != nullptr && beekeeper->getPrevState() != beekeeper->getState()->getStateName()) //ithink.
 	{
 		beekeeper->setPrevState(beekeeper->getState()->getStateName());
 	}

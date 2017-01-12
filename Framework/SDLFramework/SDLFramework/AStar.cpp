@@ -4,7 +4,7 @@ AStar::AStar(GameObject *beekeeper, Map *graph, GameObject *bee)
 {
 	
 	auto start = beekeeper->getCurrentVertex();
-	auto goal = graph->randomVertex(beekeeper->getCurrentVertex());
+	auto goal = bee->getCurrentVertex();
 	std::map<Vertex*, int> mapNodeWeight;
 	std::map<Vertex*, Vertex*> fromTo;
 
