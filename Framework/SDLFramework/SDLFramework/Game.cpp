@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <time.h>
+#undef DrawText
 
 
 Bee* Game::createBee(Vector2D SpawnPos, std::string color)
