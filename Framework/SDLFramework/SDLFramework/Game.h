@@ -5,7 +5,9 @@
 #include "Base.h"
 #include "PowerUp.h"
 #include "bee.h"
+#include "StateFactory.h"
 
+class ChaseState;
 class Map;
 
 class Game

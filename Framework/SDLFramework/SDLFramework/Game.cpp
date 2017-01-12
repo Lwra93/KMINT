@@ -1,10 +1,10 @@
 #include "Game.h"
 #include "bee.h"
 #include <SDL.h>
-#include "ChaseState.h"
 #include <iostream>
 #include <string>
 #include <time.h>
+
 
 Bee* Game::createBee(Vector2D SpawnPos, std::string color)
 {
@@ -47,9 +47,7 @@ Game::Game(FWApplication* application, Map *graph)
 	double time_counter = 0;
 
 	//startstate
-	ChaseState* chaseState = new ChaseState();
-	beekeeper->setState(chaseState);
-	chaseState->setBeekeeper(beekeeper);
+	beekeeper->setState(StateFactory::getInstance()->getNextBeekeeperState(beekeeper, "ChaseState"));
 
 
 	//while (true){}

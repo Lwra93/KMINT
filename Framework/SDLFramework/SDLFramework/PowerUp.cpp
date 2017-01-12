@@ -1,7 +1,5 @@
 #include "PowerUp.h"
 
-
-
 PowerUp::PowerUp(const Game* game): GameObject(game)
 {
 	this->texture = mApplication->LoadTexture("pill2.png");

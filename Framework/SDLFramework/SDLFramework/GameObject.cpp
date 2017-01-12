@@ -33,59 +33,6 @@ void GameObject::setLocation(double x, double y)
 
 }
 
-bool GameObject::moveTo(double x, double y, FWApplication* app)
-{
-	goalLocation = Vector2D(x, y);
-
-	bool goalreached = false;
-	double tempX = this->location->x;
-	double tempY = this->location->y;
-
-	double deltaX = x - tempX;
-	double deltaY = y - tempY;
-
-	bool moveUp = deltaY >= 0 ? true : false;
-	bool moveRight = deltaX >= 0 ? true : false;
-
-	Vector2D vector = Vector2D(deltaX, deltaY);
-	vector.Normalize();
-
-	while(!goalreached)
-	{
-		tempX += (vector.x);
-		tempY += (vector.y);
-		this->setLocation(tempX, tempY);
-
-		this->Draw();
-		
-		//werkt half, crasht nog wel is en is niet heel strak
-		if (moveUp && moveRight)
-		{
-			if (tempX >= x && tempY >= y)
-				return true;
-		}
-		else if(!moveUp && !moveRight)
-		{
-			if (tempX <= x && tempY <= y)
-				return true;
-		}
-		else if (moveUp && !moveRight)
-		{
-			if (tempX <= x && tempY >= y)
-				return true;
-		}
-		else if (!moveUp && moveRight)
-		{
-			if (tempX >= x && tempY <= y)
-				return true;
-		}
-
-			//goalreached = true;
-	}
-	
-	
-}
-
 Vector2D* GameObject::getLocation() const
 {
 	return this->location;

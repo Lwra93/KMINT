@@ -1,6 +1,7 @@
 #pragma once
 #include "IState.h"
-#include "Beekeeper.h"
+
+class Beekeeper;
 
 class State :
 	public IState

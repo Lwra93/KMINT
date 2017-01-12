@@ -16,10 +16,9 @@ class GameObject : public IGameObject {
 public:
 	GameObject(const Game* game);
 	~GameObject();
-	void Update(float deltaTime);
+	void Update(float deltaTime) override;
 	void chase(GameObject *object);
 	void setLocation(double x, double y);
-	bool moveTo(double x, double y, FWApplication* app);
 	Vector2D* getLocation() const;
 	void setCurrentVertex(Vertex* vertex);
 	Vertex* getCurrentVertex();
