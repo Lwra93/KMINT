@@ -103,6 +103,7 @@
     <ClCompile Include="PowerUp.cpp" />
     <ClCompile Include="PowerUpState.cpp" />
     <ClCompile Include="State.cpp" />
+    <ClCompile Include="StateFactory.cpp" />
     <ClCompile Include="SuperState.cpp" />
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="Vector2D.cpp" />
@@ -133,6 +134,7 @@
     <ClInclude Include="PowerUp.h" />
     <ClInclude Include="PowerUpState.h" />
     <ClInclude Include="State.h" />
+    <ClInclude Include="StateFactory.h" />
     <ClInclude Include="SuperState.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="Vector2D.h" />

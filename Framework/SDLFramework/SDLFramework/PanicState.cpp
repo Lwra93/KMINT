@@ -3,6 +3,7 @@
 #include "BaseState.h"
 #include "Util.h"
 #include "Beekeeper.h"
+#include "StateFactory.h"
 
 PanicState::PanicState()
 {
@@ -15,22 +16,23 @@ void PanicState::handle()
 
 	auto newloc = connections.at(Util::randomInt(0,connections.size()-1));
 
-	beekeeper->setCurrentVertex(newloc);
+	beekeeper->setGoalVertex(newloc);
 
 	auto rand = Util::randomInt(0, 1);
 	if(rand == 1)
 	{
 		beekeeper->removeBee();
 	}
+
+	beekeeper->setState(StateFactory::getInstance()->getNextBeekeeperState(beekeeper, "MoveState"));
+
 }
 
 void PanicState::changeState()
 {
 	if (beekeeper->getBees() == 0)
 	{
-		BaseState* baseState = new BaseState();
-		beekeeper->setState(baseState);
-		baseState->setBeekeeper(beekeeper);
+		beekeeper->setState(StateFactory::getInstance()->getNextBeekeeperState(beekeeper, "BaseState"));
 	}
 }
 

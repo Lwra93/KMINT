@@ -1,5 +1,4 @@
 #include "Game.h"
-#include "Beekeeper.h"
 #include "bee.h"
 #include <SDL.h>
 #include "ChaseState.h"

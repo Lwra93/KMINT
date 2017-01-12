@@ -5,10 +5,12 @@
 #include "Vertex.h"
 #include "Map.h"
 #include "Vector2D.h"
+#include "State.h"
 
 class Game;
-class Beekeeper;
+//class Beekeeper;
 class IState;
+class State;
 
 class GameObject : public IGameObject {
 public:
@@ -24,13 +26,13 @@ public:
 	void setGoalVertex(Vertex* vertex);
 	Vertex* getGoalVertex();
 	bool collides(GameObject *object) const;
-	void setState(IState* state);
-	IState* getState();
+	void setState(State* state);
+	State* getState();
 	void action() const;
 	void update() const;
 
 protected:
-	IState* state;
+	State* state;
 	SDL_Texture *texture;
 	Vector2D* location;
 	Vector2D goalLocation;

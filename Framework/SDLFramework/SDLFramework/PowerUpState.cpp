@@ -3,6 +3,7 @@
 #include "SuperState.h"
 #include "Beekeeper.h"
 #include "Game.h"
+#include "StateFactory.h"
 
 PowerUpState::PowerUpState()
 {
@@ -11,16 +12,18 @@ PowerUpState::PowerUpState()
 void PowerUpState::handle()
 {
 	AStar(beekeeper, beekeeper->getGame()->getGraph(), beekeeper->getGame()->getPowerUp());
+	beekeeper->setState(StateFactory::getInstance()->getNextBeekeeperState(beekeeper, "MoveState"));
 }
 
 void PowerUpState::changeState()
 {
 	beekeeper->getGame()->getBase()->emptyNet(beekeeper->removeBees());
-	SuperState* super = new SuperState();
-	beekeeper->setState(super);
+
+	beekeeper->setState(StateFactory::getInstance()->getNextBeekeeperState(beekeeper, "SuperState"));
+
 	beekeeper->setMaxBees(beekeeper->getMaxBees() * 3);
 	beekeeper->changeTexture("beekeeper_super.png");
-	super->setBeekeeper(beekeeper);
+	
 	//auto newSpeed = beekeeper->getGame()->getSpeed() * 3;
 	//beekeeper->getGame()->setSpeed(newSpeed);
 	//snelheid lopen x3

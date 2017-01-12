@@ -119,12 +119,12 @@ bool GameObject::collides(GameObject *object) const
 
 }
 
-void GameObject::setState(IState* state)
+void GameObject::setState(State* state)
 {
 	this->state = state;
 }
 
-IState* GameObject::getState()
+State* GameObject::getState()
 {
 	return state;
 }

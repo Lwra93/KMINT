@@ -3,6 +3,7 @@
 #include "AStar.h"
 #include "BaseState.h"
 #include "Beekeeper.h"
+#include "StateFactory.h"
 
 SuperState::SuperState()
 {
@@ -11,6 +12,8 @@ SuperState::SuperState()
 void SuperState::handle()
 {
 	AStar(beekeeper, beekeeper->getGame()->getGraph(), beekeeper->getGame()->getBee());
+	beekeeper->setState(StateFactory::getInstance()->getNextBeekeeperState(beekeeper, "MoveState"));
+
 }
 
 void SuperState::changeState()
@@ -20,9 +23,7 @@ void SuperState::changeState()
 	if (beekeeper->getBees() < beekeeper->getMaxBees())
 		return;
 
-	BaseState* baseState = new BaseState();
-	beekeeper->setState(baseState);
-	baseState->setBeekeeper(beekeeper);
+	beekeeper->setState(StateFactory::getInstance()->getNextBeekeeperState(beekeeper, "BaseState"));
 }
 
 string SuperState::getStateName()

@@ -3,6 +3,7 @@
 #include "AStar.h"
 #include "ChaseState.h"
 #include "Beekeeper.h"
+#include "StateFactory.h"
 
 
 MoveState::MoveState()
@@ -56,9 +57,9 @@ void MoveState::handle()
 void MoveState::changeState()
 {
 	beekeeper->setCurrentVertex(beekeeper->getGoalVertex());
-	ChaseState* state = new ChaseState();
-	beekeeper->setState(state);
-	state->setBeekeeper(beekeeper);
+
+	beekeeper->setState(StateFactory::getInstance()->getNextBeekeeperState(beekeeper, beekeeper->getPrevState()));
+
 }
 
 string MoveState::getStateName()

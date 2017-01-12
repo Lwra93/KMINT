@@ -1,9 +1,7 @@
 #pragma once
 #include "ChaseState.h"
-#include <queue>
 #include "Map.h"
 #include <list>
-#include <map>
 #include "AStar.h"
 #include "Game.h"
 #include "Util.h"
@@ -11,6 +9,8 @@
 #include "BaseState.h"
 #include "PanicState.h"
 #include "MoveState.h"
+#include "StateFactory.h"
+#include "Beekeeper.h"
 
 ChaseState::ChaseState()
 {
@@ -19,17 +19,11 @@ ChaseState::ChaseState()
 void ChaseState::handle()
 {
 	AStar(beekeeper, beekeeper->getGame()->getGraph(), beekeeper->getGame()->getBee());
-	State* state = nullptr;
-	state = new MoveState();
-	beekeeper->setState(state);
-	if (state != nullptr)
-		state->setBeekeeper(beekeeper);
+	beekeeper->setState(StateFactory::getInstance()->getNextBeekeeperState(beekeeper, "MoveState"));
 }
 
 void ChaseState::changeState()
 {
-	
-
 	beekeeper->addBee();
 
 	if(beekeeper->getBees() < beekeeper->getMaxBees())
@@ -37,26 +31,19 @@ void ChaseState::changeState()
 
 	auto randomNr = Util::randomDouble(1, 100);
 	State* state = nullptr;
-	//state = new MoveState();
-	//beekeeper->setState(state);
 	if(randomNr >= 0 && randomNr < beekeeper->getPowerupChance())
 	{
-		state = new PowerUpState();
-		beekeeper->setState(state);
+		beekeeper->setState(StateFactory::getInstance()->getNextBeekeeperState(beekeeper, "PowerUpState"));
 	}
 	else if(randomNr >= beekeeper->getPowerupChance() && randomNr < beekeeper->getPowerupChance()+beekeeper->getBaseChance())
 	{
-		state = new BaseState();
-		beekeeper->setState(state);
+		beekeeper->setState(StateFactory::getInstance()->getNextBeekeeperState(beekeeper, "BaseState"));
 	}
 	else if(randomNr >= beekeeper->getBaseChance() && randomNr <= beekeeper->getPowerupChance() + beekeeper->getBaseChance()+beekeeper->getPanicChance())
 	{
-		state = new PanicState();
-		beekeeper->setState(state);
+		beekeeper->setState(StateFactory::getInstance()->getNextBeekeeperState(beekeeper, "PanicState"));
 		beekeeper->changeTexture("beekeeper_panic.png");
 	}
-	if(state != nullptr)
-		state->setBeekeeper(beekeeper);
 }
 
 string ChaseState::getStateName()

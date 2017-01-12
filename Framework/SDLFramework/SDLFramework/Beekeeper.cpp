@@ -20,6 +20,10 @@ void Beekeeper::changeTexture(string name)
 	this->SetTexture(texture);
 }
 
+string Beekeeper::getPrevState()
+{
+	return this->prevState;
+}
 
 void Beekeeper::increaseNetSize()
 {
@@ -66,6 +70,11 @@ int Beekeeper::getMaxBees()
 void Beekeeper::setMaxBees(int amount)
 {
 	this->maxBees = amount;
+}
+
+void Beekeeper::setPrevState(string state)
+{
+	this->prevState = state;
 }
 
 double Beekeeper::getPowerupChance()

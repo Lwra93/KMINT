@@ -1,5 +1,8 @@
 #pragma once
 #include "GameObject.h"
+#include "State.h"
+
+class GameObject;
 
 class Beekeeper : public GameObject
 {
@@ -16,6 +19,9 @@ public:
 	void setMaxBees(int amount);
 	void changeTexture(string name);
 
+	string getPrevState();
+	void setPrevState(string state);
+
 	double getPowerupChance();
 	double getPanicChance();
 	double getBaseChance();
@@ -26,6 +32,8 @@ private:
 	int netSize;
 	int beesInNet;
 	int maxBees;
+
+	string prevState;
 
 	//chances for state changing
 	double powerupChance;
