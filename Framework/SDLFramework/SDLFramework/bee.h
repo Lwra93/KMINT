@@ -19,6 +19,8 @@ public:
 	const int getForce() { return this->m_dMaxForce; }
 	const int getTopSpeed() { return this->m_dMaxSpeed; }
 
+	void SetPos(int x, int y) { m_vPos.x = x; m_vPos.y = y; }
+
 private:
 	int detectionRadius;
 

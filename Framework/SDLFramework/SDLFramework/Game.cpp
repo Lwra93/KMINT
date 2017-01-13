@@ -101,6 +101,12 @@ Game::Game(FWApplication* application, Map *graph)
 
 		for(auto bee : bees)
 		{
+
+			if(isnan(bee->GetPos().x) || isnan(bee->GetPos().y))
+			{
+				bee->SetPos(0, 0);
+			}
+
 			bee->Move((float)application->mDeltaTimeMS / 1000.0f);
 		}
 
@@ -242,6 +248,7 @@ void Game::setSpeed(int amount)
 void Game::nextGen()
 {
 
+	//Selection
 	std::sort(bees.begin(), bees.end(), [](Bee* b1, Bee* b2)
 	{
 		return b1->TimeElapsed() > b2->TimeElapsed();
@@ -270,6 +277,7 @@ void Game::nextGen()
 				continue;
 			}
 
+			//Crossover
 			int split = Util::randomInt(0, 1);
 
 			int f1 = 0;
@@ -310,6 +318,25 @@ void Game::nextGen()
 			double m2Double = Util::randomDouble(1.0, 1.2);
 			auto loc2 = graph->randomVertex(nullptr);
 
+			//Mutation
+			int mutate1 = Util::randomInt(0, 999);
+			int mutate2 = Util::randomInt(0, 999);
+
+			if (mutate1 >= 500)
+			{
+				f1Double *= Util::randomDouble(1.0, 1.5);
+				d1Double *= Util::randomDouble(1.0, 1.5);
+				m1Double *= Util::randomDouble(1.0, 1.5);
+				
+			}
+				
+			if(mutate2 >= 500)
+			{
+				f2Double *= Util::randomDouble(1.0, 1.5);
+				d2Double *= Util::randomDouble(1.0, 1.5);
+				m2Double *= Util::randomDouble(1.0, 1.5);
+			}
+
 			newBees.push_back(createBee(Vector2D(loc1->getX(), loc1->getY()), f1 * f1Double, d1*d1Double, m1*m1Double));
 			newBees.push_back(createBee(Vector2D(loc2->getX(), loc2->getY()), f2 * f2Double, d2*d2Double, m2*m2Double));
 
@@ -320,6 +347,7 @@ void Game::nextGen()
 	for(auto bee : bees)
 	{
 		app->RemoveRenderable(bee);
+		delete(bee);
 	}
 
 	bees.clear();
