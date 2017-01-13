@@ -4,20 +4,23 @@
 #include <iostream>
 #include <string>
 #include <time.h>
+#include <algorithm>
+#include "Util.h"
 #undef DrawText
 
 
-Bee* Game::createBee(Vector2D SpawnPos)
+Bee* Game::createBee(Vector2D SpawnPos, double force, double detection, double speed)
 {
 	return new Bee(this,
 	               SpawnPos, //initial position
 	               100, //start rotation
 	               Vector2D(50, 50), //velocity
 	               1.0, //mass
-	               400.0, //max force
-	               160.0, //max velocity
+	               force, //max force
+	               speed, //max velocity
 	               3.14159, //max turn rate
-	               1.0);
+	               1.0,
+	               detection);
 }
 
 Game::Game(FWApplication* application, Map *graph)
@@ -115,10 +118,10 @@ Game::Game(FWApplication* application, Map *graph)
 		application->DrawText("Base chance: " + std::to_string(beekeeper->getBaseChance()), 510, 480);
 		application->DrawText("Powerup chance: " + std::to_string(beekeeper->getPowerupChance()), 510, 495);
 		application->DrawText("Panic chance: " + std::to_string(beekeeper->getPanicChance()), 510, 510);
-		application->DrawText("Bijen in mijn net: " + to_string(beekeeper->getBees()), 510, 525);
+		application->DrawText("Bijen in mijn net: " + to_string(beekeeper->getBees().size()), 510, 525);
 		application->DrawText("Net grootte: " + to_string(beekeeper->getMaxBees()), 510, 540);
 		application->DrawText("Huidige state: " + beekeeper->getState()->getStateName(), 510, 555);
-		application->DrawText("Bijen in de hive: " + to_string(base->getBees()), 510, 570);
+		application->DrawText("Bijen in de hive: " + to_string(base->getBees().size()), 510, 570);
 		application->DrawText("Snelheid Game: " + to_string(this->getSpeed()),510,585);
 
 
@@ -129,21 +132,26 @@ Game::Game(FWApplication* application, Map *graph)
 		application->SetColor(Color(0, 128, 255, 100));
 		application->DrawCircle(x, y, beekeeper->getNetSize(), true);
 
-		if(beekeeper->getBees() < beekeeper->getMaxBees() && (beekeeper->getState()->getStateName() == "ChaseState" || beekeeper->getState()->getStateName() == "SuperState"))
+		if(beekeeper->getBees().size() < beekeeper->getMaxBees() && (beekeeper->getState()->getStateName() == "ChaseState" || beekeeper->getState()->getStateName() == "SuperState"))
 		{
+
 			for (auto bee : bees)
 			{
-				if (!bee->isCaught())
-				{
 					if (bee->GetPos().Distance(beekeeper->getLocation()) <= beekeeper->getNetSize())
 					{
-						bee->Catch();
+						beekeeper->Catch(bee);
+						bees.erase(std::find(bees.begin(), bees.end(), bee));
 						application->RemoveRenderable(bee);
-						beekeeper->addBee();
-						if (beekeeper->getBees() == beekeeper->getMaxBees()) break;
+						break;
 					}
-				}
 			}
+		}
+
+		std::cout << std::to_string(bees.size()) << std::endl;
+
+		if(bees.size() <= 40)
+		{
+			nextGen();
 		}
 		
 		
@@ -192,20 +200,28 @@ Beekeeper* Game::getBeekeeper() const
 	return this->beekeeper;
 }
 
-
-
 void Game::createBees()
 {
 
 	for(auto i = 0; i < 100; i++)
 	{
 		auto location = graph->randomVertex(nullptr);
-		auto bee = createBee(Vector2D(location->getX(), location->getY()));
-		bee->SetDetectionRadius(100);
+
+		double fDouble = Util::randomDouble(1.0, 1.2);
+		double dDouble = Util::randomDouble(1.0, 1.2);
+		double sDouble = Util::randomDouble(1.0, 1.2);
+			
+		auto bee = createBee(Vector2D(location->getX(), location->getY()), 400.0*fDouble ,100.0*dDouble, 160*sDouble);
 		bees.emplace_back(bee);
 		m_pCellSpace->AddEntity(bee);
 	}
 
+}
+
+void Game::addBee(Bee*bee)
+{
+	bees.push_back(bee);
+	app->AddRenderable(bee);
 }
 
 PowerUp* Game::getPowerUp() const
@@ -221,4 +237,95 @@ int Game::getSpeed() const
 void Game::setSpeed(int amount)
 {
 	this->gameSpeed = amount;
+}
+
+void Game::nextGen()
+{
+
+	std::sort(bees.begin(), bees.end(), [](Bee* b1, Bee* b2)
+	{
+		return b1->TimeElapsed() > b2->TimeElapsed();
+	}
+	);
+
+	vector<Bee*> beez;
+	vector<Bee*> newBees;
+
+	for(auto i = 0; i < 10; i++)
+	{
+		beez.push_back(bees.at(i));
+	}
+
+	for(auto bee : beez)
+	{
+		
+		for(auto i = 0; i < 5; i++)
+		{
+
+			int id = Util::randomInt(0, 9);
+			auto mate = beez.at(id);
+			if(mate == bee)
+			{
+				i--;
+				continue;
+			}
+
+			int split = Util::randomInt(0, 1);
+
+			int f1 = 0;
+			int f2 = 0;
+			int d1 = 0;
+			int d2 = 0;
+			int m1 = 0;
+			int m2 = 0;
+
+			if(split == 0)
+			{
+				f1 = bee->getForce();
+				d1 = mate->DetectionRadius();
+				m1 = mate->getTopSpeed();
+
+				f2 = mate->getForce();
+				d2 = bee->DetectionRadius();
+				m2 = bee->getTopSpeed();
+			}
+			else
+			{
+				f1 = mate->getForce();
+				d1 = mate->DetectionRadius();
+				m1 = bee->getTopSpeed();
+
+				f2 = bee->getForce();
+				d2 = bee->DetectionRadius();
+				m2 = mate->getTopSpeed();
+			}
+
+			double f1Double = Util::randomDouble(1.0, 1.2);
+			double d1Double = Util::randomDouble(1.0, 1.2);
+			double m1Double = Util::randomDouble(1.0, 1.2);
+			auto loc1 = graph->randomVertex(nullptr);
+
+			double f2Double = Util::randomDouble(1.0, 1.2);
+			double d2Double = Util::randomDouble(1.0, 1.2);
+			double m2Double = Util::randomDouble(1.0, 1.2);
+			auto loc2 = graph->randomVertex(nullptr);
+
+			newBees.push_back(createBee(Vector2D(loc1->getX(), loc1->getY()), f1 * f1Double, d1*d1Double, m1*m1Double));
+			newBees.push_back(createBee(Vector2D(loc2->getX(), loc2->getY()), f2 * f2Double, d2*d2Double, m2*m2Double));
+
+		}
+
+	}
+
+	for(auto bee : bees)
+	{
+		app->RemoveRenderable(bee);
+	}
+
+	bees.clear();
+	bees = newBees;
+
+	beekeeper->removeBees();
+
+	
 }

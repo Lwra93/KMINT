@@ -6,8 +6,7 @@
 class Bee : public GameObject, public ForceDrivenEntity
 {
 public:
-	Bee(Game* game, Vector2D position, double rotation, Vector2D velocity, double mass, double max_force, double max_speed, double max_turn_rate, double scale);
-	//Bee(Game* game);
+	Bee(Game* game, Vector2D position, double rotation, Vector2D velocity, double mass, double max_force, double max_speed, double max_turn_rate, double scale, double detection);
 	~Bee();
 
 	void Move(float delta);
@@ -17,15 +16,11 @@ public:
 	const int DetectionRadius() { return detectionRadius; }
 	void SetDetectionRadius(int value) { detectionRadius = value; }
 
-	bool isCaught() { return caught; }
-	void Catch() { caught = true; }
+	const int getForce() { return this->m_dMaxForce; }
+	const int getTopSpeed() { return this->m_dMaxSpeed; }
 
 private:
-	int topspeed;
 	int detectionRadius;
-	int force;
-
-	bool caught;
 
 	MovingBeeBehaviour* behaviour;
 	double m_dTimeElapsed;

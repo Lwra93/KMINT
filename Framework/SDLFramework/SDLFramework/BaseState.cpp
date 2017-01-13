@@ -22,7 +22,17 @@ void BaseState::handle()
 void BaseState::changeState()
 {
 
-	beekeeper->getGame()->getBase()->emptyNet(beekeeper->removeBees());
+
+	auto bees = beekeeper->getBees();
+
+	for (auto bee : bees)
+	{
+
+		beekeeper->Release(bee);
+		beekeeper->getGame()->getBase()->AddBee(bee);
+
+	}
+
 	beekeeper->resetNet();
 
 	beekeeper->setState(StateFactory::getInstance()->getNextBeekeeperState(beekeeper, "ChaseState"));
@@ -45,7 +55,7 @@ void BaseState::update()
 	{
 
 		auto x = (beekeeper->EndTime() - beekeeper->StartTime()) / 1000;
-		auto ratio = (beekeeper->getBees() + 1) / x;
+		auto ratio = (beekeeper->getBees().size() + 1) / x;
 
 		if(beekeeper->GetSpecialState() == "ChaseState")
 		{

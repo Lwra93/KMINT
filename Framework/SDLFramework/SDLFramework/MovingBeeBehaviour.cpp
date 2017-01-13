@@ -7,13 +7,11 @@
 MovingBeeBehaviour::MovingBeeBehaviour()
 {
 	m_iFlags = 0;
-	m_dWeightCohesion = 4.0 * SteeringFoceTweaker;
-	m_dWeightAlignment = 1.0 * SteeringFoceTweaker;
-	m_dWeightSeparation = 2.0 * SteeringFoceTweaker;
+	m_dWeightCohesion = 5.0 * SteeringFoceTweaker;
+	m_dWeightAlignment = 5.0 * SteeringFoceTweaker;
+	m_dWeightSeparation = 5.0 * SteeringFoceTweaker;
 	m_dViewDistance = 50.0;
-	m_dWeightSeek = 1.0 * SteeringFoceTweaker;
 	m_dWeightArrive = 1.0 * SteeringFoceTweaker;
-	m_dWeightOffsetPursuit = 1.0 * SteeringFoceTweaker;
 	m_bCellSpaceOn = true;
 	m_dWanderDistance = WanderDist;
 	m_dWanderJitter = WanderJitterPerSec;
@@ -46,7 +44,7 @@ Vector2D MovingBeeBehaviour::Calculate()
 		//tag neighbors if any of the following 3 group behaviors are switched on
 		if (On(separation) || On(allignment) || On(cohesion))
 		{
-			bee->TagNeighbors(bee, bee->getGame()->getBees(), 30);
+			bee->TagNeighbors(bee, bee->getGame()->getBees(), m_dViewDistance);
 		}
 	}
 	else
@@ -55,7 +53,7 @@ Vector2D MovingBeeBehaviour::Calculate()
 		//behaviors are switched on
 		if (On(separation) || On(allignment) || On(cohesion))
 		{
-			bee->getGame()->CellSpace()->CalculateNeighbors(bee->GetPos(), 35);
+			bee->getGame()->CellSpace()->CalculateNeighbors(bee->GetPos(), m_dViewDistance);
 		}
 	}
 

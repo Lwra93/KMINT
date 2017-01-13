@@ -12,11 +12,21 @@ void Base::emptyNet(int bees)
 	this->bees += bees;
 }
 
-int Base::getBees()
+vector<Bee*> Base::getBees()
 {
-	return this->bees;
+	return this->beesInBase;
 }
 
 Base::~Base()
 {
+}
+
+void Base::AddBee(Bee* bee)
+{
+	beesInBase.push_back(bee);
+}
+
+void Base::RemoveAll()
+{
+	beesInBase.clear();
 }

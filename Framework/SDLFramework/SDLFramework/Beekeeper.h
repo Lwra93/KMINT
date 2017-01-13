@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "State.h"
+#include "bee.h"
 
 class GameObject;
 
@@ -13,8 +14,8 @@ public:
 	void resetNet();
 	void addBee();
 	void removeBee();
-	int getBees();
-	int removeBees();
+	vector<Bee*> getBees();
+	void removeBees();
 	int getMaxBees();
 	void setMaxBees(int amount);
 	void changeTexture(string name);
@@ -38,10 +39,13 @@ public:
 	string GetSpecialState() { return specialState; }
 	void setSpecialState(string state) { specialState = state; }
 
+	void Catch(Bee*);
+	void Release(Bee*);
+
+
 	~Beekeeper();
 private:
 	int netSize;
-	int beesInNet;
 	int maxBees;
 
 	string prevState;
@@ -53,5 +57,7 @@ private:
 	double baseChance;
 
 	double startTime, endTime;
+
+	vector<Bee*> caughtBees;
 };
 

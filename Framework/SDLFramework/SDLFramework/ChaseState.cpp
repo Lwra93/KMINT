@@ -53,9 +53,8 @@ void ChaseState::handle()
 
 void ChaseState::changeState()
 {
-	beekeeper->addBee();
 
-	if(beekeeper->getBees() < beekeeper->getMaxBees())
+	if(beekeeper->getBees().size() < beekeeper->getMaxBees())
 		return;
 
 	auto randomNr = Util::randomDouble(1, 100);
@@ -83,7 +82,7 @@ string ChaseState::getStateName()
 void ChaseState::update()
 {
 
-	if(beekeeper->getBees() >= 10)
+	if(beekeeper->getBees().size() >= 10)
 	{
 		beekeeper->setSpecialState(getStateName());
 		beekeeper->getState()->changeState();

@@ -13,7 +13,7 @@
 
 Bee::Bee(Game* game, Vector2D position,double rotation, Vector2D velocity, double mass, 
 		double max_force, double max_speed, double max_turn_rate, 
-			double scale) : GameObject(game), ForceDrivenEntity(position,
+			double scale, double detection) : GameObject(game), ForceDrivenEntity(position,
 				scale, velocity, max_speed, Vector2D(sin(rotation), -cos(rotation)),
 				mass, Vector2D(scale, scale), max_turn_rate, max_force)
 {
@@ -21,6 +21,7 @@ Bee::Bee(Game* game, Vector2D position,double rotation, Vector2D velocity, doubl
 	this->mHeight = 21;
 	this->mWidth = 25;
 	this->location = position;
+	this->detectionRadius = detection;
 	mApplication->AddRenderable(this);
 	this->behaviour = new MovingBeeBehaviour();
 	this->behaviour->Inject(this);

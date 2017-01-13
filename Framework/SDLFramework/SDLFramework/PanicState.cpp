@@ -21,7 +21,9 @@ void PanicState::handle()
 	auto rand = Util::randomInt(0, 1);
 	if(rand == 1)
 	{
-		beekeeper->removeBee();
+		auto bee = beekeeper->getBees()[0];
+		beekeeper->Release(bee);
+		beekeeper->getGame()->addBee(bee);
 	}
 
 	beekeeper->setState(StateFactory::getInstance()->getNextBeekeeperState(beekeeper, "MoveState"));
@@ -30,7 +32,7 @@ void PanicState::handle()
 
 void PanicState::changeState()
 {
-	if (beekeeper->getBees() == 0)
+	if (beekeeper->getBees().size() == 0)
 	{
 		beekeeper->setSpecialState(getStateName());
 		beekeeper->setState(StateFactory::getInstance()->getNextBeekeeperState(beekeeper, "BaseState"));

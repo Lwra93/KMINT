@@ -17,7 +17,16 @@ void PowerUpState::handle()
 
 void PowerUpState::changeState()
 {
-	beekeeper->getGame()->getBase()->emptyNet(beekeeper->removeBees());
+
+	auto bees = beekeeper->getBees();
+	
+	for(auto bee : bees)
+	{
+		
+		beekeeper->Release(bee);
+		beekeeper->getGame()->getBase()->AddBee(bee);
+
+	}
 
 	beekeeper->setState(StateFactory::getInstance()->getNextBeekeeperState(beekeeper, "SuperState"));
 

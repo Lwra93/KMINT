@@ -14,7 +14,7 @@ class Map;
 class Game
 {
 public:
-	Bee* createBee(Vector2D SpawnPos);
+	Bee* createBee(Vector2D SpawnPos, double force, double detection, double speed);
 	Game(FWApplication* app, Map *graph);
 	~Game();
 	Map* getGraph() const;
@@ -23,6 +23,7 @@ public:
 	Beekeeper* getBeekeeper() const;
 	vector<Bee*> getBees() const;
 	void createBees();
+	void addBee(Bee*);
 	PowerUp* getPowerUp() const;
 	int getSpeed() const;
 	void setSpeed(int amount);
@@ -30,6 +31,8 @@ public:
 	CellSpacePartition<Bee*>* CellSpace() { return m_pCellSpace; }
 
 	void StartTime() { beekeeper->STime(app->mTimeMS); }
+	
+	void nextGen();
 
 private:
 	FWApplication* app;

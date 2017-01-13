@@ -40,26 +40,14 @@ int Beekeeper::getNetSize()
 	return this->netSize;
 }
 
-void Beekeeper::addBee()
+vector<Bee*> Beekeeper::getBees()
 {
-	this->beesInNet++;
+	return this->caughtBees;
 }
 
-void Beekeeper::removeBee()
+void Beekeeper::removeBees()
 {
-	this->beesInNet--;
-}
-
-int Beekeeper::getBees()
-{
-	return this->beesInNet;
-}
-
-int Beekeeper::removeBees()
-{
-	auto bees = this->beesInNet;
-	this->beesInNet = 0;
-	return bees;
+	caughtBees.clear();
 }
 
 int Beekeeper::getMaxBees()
@@ -90,6 +78,16 @@ double Beekeeper::getPanicChance()
 double Beekeeper::getBaseChance()
 {
 	return baseChance;
+}
+
+void Beekeeper::Catch(Bee* bee)
+{	
+	caughtBees.push_back(bee);
+}
+
+void Beekeeper::Release(Bee*bee)
+{
+	caughtBees.erase(std::find(caughtBees.begin(), caughtBees.end(), bee));
 }
 
 Beekeeper::~Beekeeper()

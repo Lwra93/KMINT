@@ -46,7 +46,7 @@ void SuperState::handle()
 void SuperState::changeState()
 {
 
-	if (beekeeper->getBees() < beekeeper->getMaxBees())
+	if (beekeeper->getBees().size() < beekeeper->getMaxBees())
 		return;
 
 	beekeeper->getGame()->setSpeed(beekeeper->getGame()->getSpeed() / 3);
@@ -61,7 +61,7 @@ string SuperState::getStateName()
 void SuperState::update()
 {
 
-	if(beekeeper->getBees() >= 30)
+	if(beekeeper->getBees().size() >= 30)
 	{
 		beekeeper->setSpecialState(getStateName());
 		beekeeper->getState()->changeState();
