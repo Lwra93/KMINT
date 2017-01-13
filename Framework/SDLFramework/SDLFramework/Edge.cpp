@@ -1,7 +1,7 @@
 #pragma once
 #include "Edge.h"
 
-Edge::Edge(Vertex* v1, Vertex* v2, EdgeWeight weight)
+Edge::Edge(Vertex* v1, Vertex* v2)
 {
 	v1->addEdge(this);
 	v2->addEdge(this);

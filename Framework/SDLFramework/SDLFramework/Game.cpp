@@ -30,6 +30,10 @@ Game::Game(FWApplication* application, Map *graph)
 	base = new Base(this);
 	powerup = new PowerUp(this);
 	this->graph = graph;
+
+	/*SDL_Texture* map = application->LoadTexture("map.png");
+	application->DrawTexture(map, 0, 0);*/
+	//application->DrawTexture(application->LoadTexture("map.png"), 0, 0);
 	
 	m_pCellSpace = new CellSpacePartition<Bee*>((double)application->getWidth(), (double)application->getHeight(), 7, 7, amountOfBees + 1);
 	createBees();
@@ -37,7 +41,7 @@ Game::Game(FWApplication* application, Map *graph)
 	//vaste objecten
 	beekeeper->setCurrentVertex(graph->randomVertex(beekeeper->getCurrentVertex()));
 	powerup->setCurrentVertex(graph->randomVertex(powerup->getCurrentVertex()));
-	base->setCurrentVertex(graph->getVertex(0));
+	base->setCurrentVertex(graph->getVertex(109));
 
 	application->AddRenderable(base);
 	application->AddRenderable(beekeeper);
@@ -49,12 +53,13 @@ Game::Game(FWApplication* application, Map *graph)
 
 	//startstate
 	beekeeper->setState(StateFactory::getInstance()->getNextBeekeeperState(beekeeper, "ChaseState"));
-
+	
+	
 
 	//while (true){}
 	while (application->IsRunning())
 	{
-
+		
 		application->StartTick();
 
 		SDL_Event event;
@@ -100,19 +105,21 @@ Game::Game(FWApplication* application, Map *graph)
 		beekeeper->action();
 		beekeeper->update();
 
+		application->DrawTexture(application->LoadTexture("map.png"), 0, 0);
+
 		// Graph drawing
 		graph->draw(*application);
 
 		// stats TODO FIXEN
-		application->SetColor(Color(0, 0, 0, 255));
-		application->DrawText("Base chance: " + std::to_string(beekeeper->getBaseChance()), 510, 520);
-		application->DrawText("Powerup chance: " + std::to_string(beekeeper->getPowerupChance()), 510, 540);
-		application->DrawText("Panic chance: " + std::to_string(beekeeper->getPanicChance()), 510, 560);
-		/*application->DrawText("Bijen in mijn net: " + to_string(beekeeper->getBees()), 510, 520);
-		application->DrawText("Net grootte: " + to_string(beekeeper->getMaxBees()), 510, 540);*/
-		application->DrawText("Huidige state: " + beekeeper->getState()->getStateName(), 510, 580);
-		/*application->DrawText("Bijen in de hive: " + to_string(base->getBees()), 510, 580);
-		application->DrawText("Snelheid Game: " + to_string(this->getSpeed()),510,500);*/
+		application->SetColor(Color(255, 0, 0, 255));
+		application->DrawText("Base chance: " + std::to_string(beekeeper->getBaseChance()), 510, 480);
+		application->DrawText("Powerup chance: " + std::to_string(beekeeper->getPowerupChance()), 510, 495);
+		application->DrawText("Panic chance: " + std::to_string(beekeeper->getPanicChance()), 510, 510);
+		application->DrawText("Bijen in mijn net: " + to_string(beekeeper->getBees()), 510, 525);
+		application->DrawText("Net grootte: " + to_string(beekeeper->getMaxBees()), 510, 540);
+		application->DrawText("Huidige state: " + beekeeper->getState()->getStateName(), 510, 555);
+		application->DrawText("Bijen in de hive: " + to_string(base->getBees()), 510, 570);
+		application->DrawText("Snelheid Game: " + to_string(this->getSpeed()),510,585);
 
 
 
@@ -139,6 +146,8 @@ Game::Game(FWApplication* application, Map *graph)
 			}
 		}
 		
+		
+
 		// For the background
 		application->SetColor(Color(255, 255, 255, 255));
 

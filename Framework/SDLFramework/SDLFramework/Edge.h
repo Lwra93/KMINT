@@ -16,7 +16,7 @@ enum EdgeWeight
 class Edge
 {
 public:
-	Edge(Vertex* v1, Vertex* v2, EdgeWeight weight);
+	Edge(Vertex* v1, Vertex* v2);
 	EdgeWeight getWeight() const;
 	vector<Vertex*> getVertexes() const;
 	Vertex* getOther(Vertex* v) const;
