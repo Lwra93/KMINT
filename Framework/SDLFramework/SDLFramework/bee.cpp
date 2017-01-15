@@ -26,6 +26,7 @@ Bee::Bee(Game* game, Vector2D position,double rotation, Vector2D velocity, doubl
 	this->behaviour = new MovingBeeBehaviour();
 	this->behaviour->Inject(this);
 
+
 }
 
 Bee::~Bee()
